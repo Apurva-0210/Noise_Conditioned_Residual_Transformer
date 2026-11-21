@@ -54,32 +54,56 @@ app.add_middleware(
 MODELS = {}
 MATLAB_DATA_CACHE = {}
 
+# SafeDense adapter to strip quantization_config when loading models across Keras versions
+try:
+    from keras.layers import Dense as KerasDense
+    class SafeDense(KerasDense):
+        def __init__(self, *args, **kwargs):
+            kwargs.pop("quantization_config", None)
+            super().__init__(*args, **kwargs)
+except Exception:
+    SafeDense = None
+
 def load_models():
-    """Load pretrained Keras models into memory."""
+    """Load pretrained Keras models into memory with robust fallback."""
     models_dir = os.path.join(VEHCOM_DIR, "models")
     custom_objs = {"LastFrame": LastFrame}
+    if SafeDense is not None:
+        custom_objs["Dense"] = SafeDense
 
     # 1. Base synthetic models
     ncrt_path = os.path.join(models_dir, "ncrt_tdl_64.keras")
     if os.path.exists(ncrt_path):
-        MODELS["ncrt"] = tf.keras.models.load_model(ncrt_path, custom_objects=custom_objs, compile=False, safe_mode=False)
-        print("✓ NCRT (Base Synthetic) loaded.")
+        try:
+            MODELS["ncrt"] = tf.keras.models.load_model(ncrt_path, custom_objects=custom_objs, compile=False, safe_mode=False)
+            print("✓ NCRT (Base Synthetic) loaded.")
+        except Exception as e:
+            print(f"Warning loading NCRT model: {e}")
 
     ncrn_path = os.path.join(models_dir, "ncrn_tdl_64.keras")
     if os.path.exists(ncrn_path):
-        MODELS["ncrn"] = tf.keras.models.load_model(ncrn_path, custom_objects=custom_objs, compile=False, safe_mode=False)
-        print("✓ NCRN (Base Synthetic) loaded.")
+        try:
+            MODELS["ncrn"] = tf.keras.models.load_model(ncrn_path, custom_objects=custom_objs, compile=False, safe_mode=False)
+            print("✓ NCRN (Base Synthetic) loaded.")
+        except Exception as e:
+            print(f"Warning loading NCRN model: {e}")
 
     # 2. MATLAB 5G + 6G fine-tuned models
     ncrt_matlab_path = os.path.join(models_dir, "ncrt_tdl_64_matlab_5g_6g.keras")
     if os.path.exists(ncrt_matlab_path):
-        MODELS["ncrt_matlab"] = tf.keras.models.load_model(ncrt_matlab_path, custom_objects=custom_objs, compile=False, safe_mode=False)
-        print("✓ NCRT (MATLAB 5G+6G Sub-THz Trained) loaded.")
+        try:
+            MODELS["ncrt_matlab"] = tf.keras.models.load_model(ncrt_matlab_path, custom_objects=custom_objs, compile=False, safe_mode=False)
+            print("✓ NCRT (MATLAB 5G+6G Sub-THz Trained) loaded.")
+        except Exception as e:
+            print(f"Warning loading NCRT MATLAB model: {e}")
 
     ncrn_matlab_path = os.path.join(models_dir, "ncrn_tdl_64_matlab_5g_6g.keras")
     if os.path.exists(ncrn_matlab_path):
-        MODELS["ncrn_matlab"] = tf.keras.models.load_model(ncrn_matlab_path, custom_objects=custom_objs, compile=False, safe_mode=False)
-        print("✓ NCRN (MATLAB 5G+6G Trained) loaded.")
+        try:
+            MODELS["ncrn_matlab"] = tf.keras.models.load_model(ncrn_matlab_path, custom_objects=custom_objs, compile=False, safe_mode=False)
+            print("✓ NCRN (MATLAB 5G+6G Trained) loaded.")
+        except Exception as e:
+            print(f"Warning loading NCRN MATLAB model: {e}")
 
 def preload_matlab_datasets():
     """Cache MATLAB test datasets for fast UI interaction."""
