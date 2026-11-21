@@ -14,7 +14,8 @@ import {
   ChevronRight,
   Move,
   Scan,
-  Download
+  Download,
+  LayoutDashboard
 } from 'lucide-react';
 
 import { checkHealth, fetchScenarios, runEstimation, runSweep, getApiBase } from './api';
@@ -24,6 +25,7 @@ import ChannelHeatmap from './components/ChannelHeatmap';
 import PerformanceCurve from './components/PerformanceCurve';
 import MatlabStudio from './components/MatlabStudio';
 import RightSidebar from './components/RightSidebar';
+import GlassWorkspaceDemo from './components/ui/demo';
 
 export default function App() {
   const [backendOnline, setBackendOnline] = useState(false);
@@ -364,6 +366,18 @@ export default function App() {
               <Play size={14} />
               <span>6G Sub-THz studio</span>
             </button>
+
+            <button
+              onClick={() => setActiveTab('glass_dashboard')}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition cursor-pointer ${
+                activeTab === 'glass_dashboard'
+                  ? 'bg-[#789575] text-[#F2F3E2] shadow-xs'
+                  : 'text-[#647B62] hover:text-[#263629]'
+              }`}
+            >
+              <LayoutDashboard size={14} />
+              <span>Glass workspace</span>
+            </button>
           </div>
 
           <div className="flex items-center gap-3">
@@ -575,6 +589,13 @@ export default function App() {
         {/* Tab 3: 6G Sub-THz & MATLAB Studio */}
         {activeTab === 'matlab_6g' && (
           <MatlabStudio onMetricsUpdate={(m) => setMatlabMetrics(m)} />
+        )}
+
+        {/* Tab 4: Adjustable Glass Workspace */}
+        {activeTab === 'glass_dashboard' && (
+          <div className="rounded-xl overflow-hidden border border-[#CCD3B5]">
+            <GlassWorkspaceDemo />
+          </div>
         )}
       </main>
 
