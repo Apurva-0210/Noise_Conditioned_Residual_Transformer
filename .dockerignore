@@ -1,0 +1,24 @@
+# Version control & OS metadata
+.git
+.gitignore
+.DS_Store
+*.zip
+*.tar.gz
+
+# Python cache & virtual environments
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv
+venv
+env
+*.egg-info
+.pytest_cache
+
+# IDE configurations
+.idea
+.vscode
+*.sublime-project
+*.sublime-workspace

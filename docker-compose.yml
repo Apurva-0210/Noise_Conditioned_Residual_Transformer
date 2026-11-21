@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  ncrt:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ncrt-vehcom:latest
+    container_name: ncrt_reproducibility
+    volumes:
+      # Mount outputs directory so newly generated CSVs and figures persist to the host
+      - ./outputs:/workspace/outputs
+    stdin_open: true
+    tty: true
+    command: /bin/bash
