@@ -149,50 +149,50 @@ Platform URL: ${window.location.href}`;
       />
 
       {/* Slide-over Right Drawer */}
-      <aside className="fixed top-0 right-0 h-full w-88 sm:w-96 bg-[#F2F3E2] border-l border-[#CCD3B5] shadow-2xl z-50 p-5 flex flex-col justify-between overflow-y-auto transform transition-transform duration-300 ease-in-out">
-        <div className="space-y-5">
+      <aside className="fixed top-0 right-0 h-full w-88 sm:w-96 bg-[#F2F3E2] border-l border-[#CCD3B5] shadow-xl z-50 p-5 flex flex-col justify-between overflow-y-auto transform transition-transform duration-200 ease-in-out">
+        <div className="space-y-4">
           {/* Header */}
           <div className="flex items-center justify-between border-b border-[#CCD3B5] pb-3">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-[#789575] flex items-center justify-center text-[#F2F3E2] shadow-sm">
-                <Camera size={15} />
+              <div className="w-7 h-7 rounded-md bg-[#789575] flex items-center justify-center text-[#F2F3E2] shadow-xs">
+                <Camera size={14} />
               </div>
               <div>
-                <h3 className="text-xs font-black uppercase tracking-wider text-[#263629]">
-                  Chart Tools & Export Hub
+                <h3 className="text-xs font-semibold text-[#263629]">
+                  Chart tools & export hub
                 </h3>
-                <p className="text-[10px] text-[#647B62] font-medium">
-                  Scientific Plot Actions & Artifacts
+                <p className="text-[10px] text-[#647B62]">
+                  Scientific actions & data artifacts
                 </p>
               </div>
             </div>
 
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1.5 rounded-lg hover:bg-[#EEF0DC] text-[#647B62] hover:text-[#263629] transition cursor-pointer border border-transparent hover:border-[#CCD3B5]"
+              className="p-1 rounded-md hover:bg-[#EEF0DC] text-[#647B62] hover:text-[#263629] transition cursor-pointer border border-transparent hover:border-[#CCD3B5]"
               title="Close panel"
             >
-              <X size={16} />
+              <X size={15} />
             </button>
           </div>
 
           {/* Sub-Tabs: Chart Tools | Data Exports | Citation */}
-          <div className="grid grid-cols-3 bg-[#EEF0DC] p-1 rounded-lg border border-[#CCD3B5] text-[11px] font-bold">
+          <div className="grid grid-cols-3 bg-[#EEF0DC] p-0.5 rounded-md border border-[#CCD3B5] text-[11px] font-medium">
             <button
               onClick={() => setActiveTab('chart_tools')}
-              className={`py-1.5 px-2 rounded-md transition text-center cursor-pointer ${
+              className={`py-1.5 px-2 rounded transition text-center cursor-pointer ${
                 activeTab === 'chart_tools'
-                  ? 'bg-[#789575] text-[#F2F3E2] shadow-sm'
+                  ? 'bg-[#789575] text-[#F2F3E2] shadow-xs'
                   : 'text-[#647B62] hover:text-[#263629]'
               }`}
             >
-              Chart Tools
+              Tools
             </button>
             <button
               onClick={() => setActiveTab('data_exports')}
-              className={`py-1.5 px-2 rounded-md transition text-center cursor-pointer ${
+              className={`py-1.5 px-2 rounded transition text-center cursor-pointer ${
                 activeTab === 'data_exports'
-                  ? 'bg-[#789575] text-[#F2F3E2] shadow-sm'
+                  ? 'bg-[#789575] text-[#F2F3E2] shadow-xs'
                   : 'text-[#647B62] hover:text-[#263629]'
               }`}
             >
@@ -200,9 +200,9 @@ Platform URL: ${window.location.href}`;
             </button>
             <button
               onClick={() => setActiveTab('citation')}
-              className={`py-1.5 px-2 rounded-md transition text-center cursor-pointer ${
+              className={`py-1.5 px-2 rounded transition text-center cursor-pointer ${
                 activeTab === 'citation'
-                  ? 'bg-[#789575] text-[#F2F3E2] shadow-sm'
+                  ? 'bg-[#789575] text-[#F2F3E2] shadow-xs'
                   : 'text-[#647B62] hover:text-[#263629]'
               }`}
             >
@@ -212,12 +212,12 @@ Platform URL: ${window.location.href}`;
 
           {/* TAB 1: CHART TOOLS (Download Images, Download Plot as PNG, Share Chart, Pan, Box) */}
           {activeTab === 'chart_tools' && (
-            <div className="space-y-4">
+            <div className="space-y-3">
               {/* Interactive Viewport Tools: Pan & Box Zoom */}
-              <div className="bg-[#EEF0DC] border border-[#CCD3B5] rounded-xl p-3.5 space-y-2.5">
+              <div className="bg-[#EEF0DC] border border-[#CCD3B5] rounded-md p-3 space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#263629]">
-                    Plot Navigation Mode
+                  <span className="text-[11px] font-medium text-[#263629]">
+                    Plot navigation mode
                   </span>
                   <span className="text-[10px] text-[#647B62] font-mono">
                     Active: <strong className="text-[#263629] capitalize">{chartDragMode}</strong>
@@ -227,25 +227,25 @@ Platform URL: ${window.location.href}`;
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={() => setChartDragMode && setChartDragMode('pan')}
-                    className={`flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg border text-xs font-bold transition cursor-pointer ${
+                    className={`flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-md border text-xs font-medium transition cursor-pointer ${
                       chartDragMode === 'pan'
-                        ? 'bg-[#789575] text-[#F2F3E2] border-[#789575] shadow-sm'
+                        ? 'bg-[#789575] text-[#F2F3E2] border-[#789575] shadow-xs'
                         : 'bg-[#F2F3E2] text-[#263629] border-[#CCD3B5] hover:bg-[#E5E8CE]'
                     }`}
                   >
-                    <Move size={14} />
+                    <Move size={13} />
                     <span>Pan</span>
                   </button>
 
                   <button
                     onClick={() => setChartDragMode && setChartDragMode('zoom')}
-                    className={`flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg border text-xs font-bold transition cursor-pointer ${
+                    className={`flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-md border text-xs font-medium transition cursor-pointer ${
                       chartDragMode === 'zoom'
-                        ? 'bg-[#789575] text-[#F2F3E2] border-[#789575] shadow-sm'
+                        ? 'bg-[#789575] text-[#F2F3E2] border-[#789575] shadow-xs'
                         : 'bg-[#F2F3E2] text-[#263629] border-[#CCD3B5] hover:bg-[#E5E8CE]'
                     }`}
                   >
-                    <Scan size={14} />
+                    <Scan size={13} />
                     <span>Box</span>
                   </button>
                 </div>
@@ -262,22 +262,22 @@ Platform URL: ${window.location.href}`;
               </div>
 
               {/* Visual Figure Downloads */}
-              <div className="bg-[#EEF0DC] border border-[#CCD3B5] rounded-xl p-3.5 space-y-2.5">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#263629] block">
-                  Figure & Image Exports
+              <div className="bg-[#EEF0DC] border border-[#CCD3B5] rounded-md p-3 space-y-2">
+                <span className="text-[11px] font-medium text-[#263629] block">
+                  Figure & image exports
                 </span>
 
                 {/* 1. Download Plot as PNG */}
                 <button
                   onClick={onDownloadActivePlot}
-                  className="w-full flex items-center justify-between py-2 px-3 rounded-lg bg-[#F2F3E2] hover:bg-[#E5E8CE] border border-[#CCD3B5] text-xs font-bold text-[#263629] transition cursor-pointer shadow-sm group"
+                  className="w-full flex items-center justify-between py-1.5 px-2.5 rounded-md bg-[#F2F3E2] hover:bg-[#E5E8CE] border border-[#CCD3B5] text-xs font-medium text-[#263629] transition cursor-pointer"
                 >
                   <div className="flex items-center gap-2">
-                    <Camera size={14} className="text-[#789575] group-hover:scale-110 transition" />
-                    <span>Download Plot as PNG</span>
+                    <Camera size={13} className="text-[#789575]" />
+                    <span>Download plot as PNG</span>
                   </div>
                   <span className="text-[10px] font-mono text-[#647B62] bg-[#EEF0DC] px-1.5 py-0.5 rounded border border-[#CCD3B5]">
-                    Raster (.png)
+                    .png
                   </span>
                 </button>
 
@@ -285,32 +285,32 @@ Platform URL: ${window.location.href}`;
                 <button
                   onClick={handleDownloadAllImagesClick}
                   disabled={downloadingImages}
-                  className="w-full flex items-center justify-between py-2 px-3 rounded-lg bg-[#F2F3E2] hover:bg-[#E5E8CE] border border-[#CCD3B5] text-xs font-bold text-[#263629] transition cursor-pointer shadow-sm group"
+                  className="w-full flex items-center justify-between py-1.5 px-2.5 rounded-md bg-[#F2F3E2] hover:bg-[#E5E8CE] border border-[#CCD3B5] text-xs font-medium text-[#263629] transition cursor-pointer"
                 >
                   <div className="flex items-center gap-2">
-                    <ImageIcon size={14} className="text-[#789575] group-hover:scale-110 transition" />
-                    <span>Download Images</span>
+                    <ImageIcon size={13} className="text-[#789575]" />
+                    <span>Download all panels</span>
                   </div>
                   <span className="text-[10px] font-mono text-[#647B62] bg-[#EEF0DC] px-1.5 py-0.5 rounded border border-[#CCD3B5]">
-                    {downloadingImages ? 'Saving...' : 'All 5 Panels'}
+                    {downloadingImages ? 'Saving...' : '5 panels'}
                   </span>
                 </button>
 
                 {/* 3. Share Chart */}
                 <button
                   onClick={handleShareChart}
-                  className="w-full flex items-center justify-between py-2 px-3 rounded-lg bg-[#F2F3E2] hover:bg-[#E5E8CE] border border-[#CCD3B5] text-xs font-bold text-[#263629] transition cursor-pointer shadow-sm group"
+                  className="w-full flex items-center justify-between py-1.5 px-2.5 rounded-md bg-[#F2F3E2] hover:bg-[#E5E8CE] border border-[#CCD3B5] text-xs font-medium text-[#263629] transition cursor-pointer"
                 >
                   <div className="flex items-center gap-2">
                     {copiedShare ? (
-                      <Check size={14} className="text-emerald-600" />
+                      <Check size={13} className="text-emerald-600" />
                     ) : (
-                      <Share2 size={14} className="text-[#789575] group-hover:scale-110 transition" />
+                      <Share2 size={13} className="text-[#789575]" />
                     )}
-                    <span>Share Chart</span>
+                    <span>Copy summary</span>
                   </div>
                   <span className="text-[10px] font-mono text-[#647B62] bg-[#EEF0DC] px-1.5 py-0.5 rounded border border-[#CCD3B5]">
-                    {copiedShare ? 'Copied!' : 'Copy Summary'}
+                    {copiedShare ? 'Copied' : 'Clipboard'}
                   </span>
                 </button>
               </div>
@@ -320,37 +320,37 @@ Platform URL: ${window.location.href}`;
           {/* TAB 2: DATA EXPORTS (.json, .csv, .keras, .zip) */}
           {activeTab === 'data_exports' && (
             <div className="space-y-3">
-              <div className="bg-[#EEF0DC] border border-[#CCD3B5] rounded-xl p-3.5 space-y-2.5">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#263629] block">
-                  Scientific Data & Models
+              <div className="bg-[#EEF0DC] border border-[#CCD3B5] rounded-md p-3 space-y-2">
+                <span className="text-[11px] font-medium text-[#263629] block">
+                  Scientific data & models
                 </span>
 
                 {/* Channel Matrix JSON */}
                 <button
                   onClick={handleExportCurrentMatrix}
                   disabled={!currentMatrixData}
-                  className="w-full flex items-center justify-between py-2 px-3 rounded-lg bg-[#F2F3E2] hover:bg-[#E5E8CE] disabled:opacity-50 border border-[#CCD3B5] text-xs font-bold text-[#263629] transition cursor-pointer shadow-sm group"
+                  className="w-full flex items-center justify-between py-1.5 px-2.5 rounded-md bg-[#F2F3E2] hover:bg-[#E5E8CE] disabled:opacity-50 border border-[#CCD3B5] text-xs font-medium text-[#263629] transition cursor-pointer"
                 >
                   <div className="flex items-center gap-2">
-                    <FileCode size={14} className="text-[#789575]" />
-                    <span>Channel Matrix (.json)</span>
+                    <FileCode size={13} className="text-[#789575]" />
+                    <span>Channel matrix (.json)</span>
                   </div>
                   <span className="text-[10px] font-mono text-[#647B62] bg-[#EEF0DC] px-1.5 py-0.5 rounded border border-[#CCD3B5]">
-                    {exportedJson ? 'Downloaded' : '64×64 Grid'}
+                    {exportedJson ? 'Saved' : '64×64'}
                   </span>
                 </button>
 
                 {/* Simulation Config JSON */}
                 <button
                   onClick={handleExportConfig}
-                  className="w-full flex items-center justify-between py-2 px-3 rounded-lg bg-[#F2F3E2] hover:bg-[#E5E8CE] border border-[#CCD3B5] text-xs font-bold text-[#263629] transition cursor-pointer shadow-sm group"
+                  className="w-full flex items-center justify-between py-1.5 px-2.5 rounded-md bg-[#F2F3E2] hover:bg-[#E5E8CE] border border-[#CCD3B5] text-xs font-medium text-[#263629] transition cursor-pointer"
                 >
                   <div className="flex items-center gap-2">
-                    <FileText size={14} className="text-[#789575]" />
-                    <span>Simulation Config (.json)</span>
+                    <FileText size={13} className="text-[#789575]" />
+                    <span>Simulation config (.json)</span>
                   </div>
                   <span className="text-[10px] font-mono text-[#647B62] bg-[#EEF0DC] px-1.5 py-0.5 rounded border border-[#CCD3B5]">
-                    {exportedConfig ? 'Downloaded' : 'Parameters'}
+                    {exportedConfig ? 'Saved' : 'Params'}
                   </span>
                 </button>
 
@@ -359,14 +359,14 @@ Platform URL: ${window.location.href}`;
                   href={`${getApiBase()}/download/csv/${activeStandard === '5g_nr' ? '5g' : '6g'}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-full flex items-center justify-between py-2 px-3 rounded-lg bg-[#F2F3E2] hover:bg-[#E5E8CE] border border-[#CCD3B5] text-xs font-bold text-[#263629] transition cursor-pointer shadow-sm group"
+                  className="w-full flex items-center justify-between py-1.5 px-2.5 rounded-md bg-[#F2F3E2] hover:bg-[#E5E8CE] border border-[#CCD3B5] text-xs font-medium text-[#263629] transition cursor-pointer"
                 >
                   <div className="flex items-center gap-2">
-                    <FileSpreadsheet size={14} className="text-[#789575]" />
-                    <span>Benchmark Results (.csv)</span>
+                    <FileSpreadsheet size={13} className="text-[#789575]" />
+                    <span>Benchmark results (.csv)</span>
                   </div>
                   <span className="text-[10px] font-mono text-[#647B62] bg-[#EEF0DC] px-1.5 py-0.5 rounded border border-[#CCD3B5]">
-                    500 Samples
+                    500 samples
                   </span>
                 </a>
 
@@ -375,14 +375,14 @@ Platform URL: ${window.location.href}`;
                   href={`${getApiBase()}/download/model`}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-full flex items-center justify-between py-2 px-3 rounded-lg bg-[#F2F3E2] hover:bg-[#E5E8CE] border border-[#CCD3B5] text-xs font-bold text-[#263629] transition cursor-pointer shadow-sm group"
+                  className="w-full flex items-center justify-between py-1.5 px-2.5 rounded-md bg-[#F2F3E2] hover:bg-[#E5E8CE] border border-[#CCD3B5] text-xs font-medium text-[#263629] transition cursor-pointer"
                 >
                   <div className="flex items-center gap-2">
-                    <Database size={14} className="text-[#789575]" />
-                    <span>Trained Model (.keras)</span>
+                    <Database size={13} className="text-[#789575]" />
+                    <span>Trained weights (.keras)</span>
                   </div>
                   <span className="text-[10px] font-mono text-[#647B62] bg-[#EEF0DC] px-1.5 py-0.5 rounded border border-[#CCD3B5]">
-                    888K Weights
+                    888K
                   </span>
                 </a>
 
@@ -391,14 +391,14 @@ Platform URL: ${window.location.href}`;
                   href={`${getApiBase()}/download/release-zip`}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-full flex items-center justify-between py-2 px-3 rounded-lg bg-[#789575] hover:bg-[#668263] border border-[#789575] text-xs font-bold text-[#F2F3E2] transition cursor-pointer shadow-sm group"
+                  className="w-full flex items-center justify-between py-1.5 px-2.5 rounded-md bg-[#789575] hover:bg-[#668263] border border-[#789575] text-xs font-medium text-[#F2F3E2] transition cursor-pointer"
                 >
                   <div className="flex items-center gap-2">
-                    <Package size={14} className="text-[#F2F3E2]" />
-                    <span>Complete Release (.zip)</span>
+                    <Package size={13} className="text-[#F2F3E2]" />
+                    <span>Complete release (.zip)</span>
                   </div>
                   <span className="text-[10px] font-mono text-[#F2F3E2] bg-[#5F795C] px-1.5 py-0.5 rounded">
-                    Distribution
+                    Bundle
                   </span>
                 </a>
               </div>
@@ -408,20 +408,20 @@ Platform URL: ${window.location.href}`;
           {/* TAB 3: CITATION & METADATA */}
           {activeTab === 'citation' && (
             <div className="space-y-3">
-              <div className="bg-[#EEF0DC] border border-[#CCD3B5] rounded-xl p-3.5 space-y-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#263629] block">
-                  Manuscript Citation
+              <div className="bg-[#EEF0DC] border border-[#CCD3B5] rounded-md p-3 space-y-2">
+                <span className="text-[11px] font-medium text-[#263629] block">
+                  Manuscript citation
                 </span>
-                <p className="text-xs text-[#263629] font-medium leading-relaxed">
+                <p className="text-xs text-[#263629] font-normal leading-relaxed">
                   Apurva Kumar, Vibha Patel, and Shweta Kukade. "Attention-Based Residual Learning Channel Estimation for Massive MIMO." <em>Vehicular Communications</em>, Elsevier, 2026.
                 </p>
                 <div className="relative mt-2">
-                  <pre className="p-2.5 rounded-lg bg-[#E5E8CE] border border-[#CCD3B5] text-[10px] font-mono text-[#263629] overflow-x-auto">
+                  <pre className="p-2.5 rounded-md bg-[#E5E8CE] border border-[#CCD3B5] text-[10px] font-mono text-[#263629] overflow-x-auto">
                     {bibtexCode}
                   </pre>
                   <button
                     onClick={handleCopyBibtex}
-                    className="absolute top-2 right-2 flex items-center gap-1 text-[10px] font-bold bg-[#789575] text-[#F2F3E2] px-2 py-0.5 rounded shadow-sm hover:bg-[#668263] cursor-pointer"
+                    className="absolute top-2 right-2 flex items-center gap-1 text-[10px] font-medium bg-[#789575] text-[#F2F3E2] px-2 py-0.5 rounded hover:bg-[#668263] cursor-pointer"
                   >
                     {copiedBibtex ? <Check size={11} /> : <Copy size={11} />}
                     <span>{copiedBibtex ? 'Copied' : 'Copy BibTeX'}</span>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sliders, Zap, TrendingUp, Radio, Activity, Sparkles } from 'lucide-react';
+import { Sliders, Play, TrendingUp } from 'lucide-react';
 
 export default function Controls({
   scenarios,
@@ -21,19 +21,19 @@ export default function Controls({
   const dopplerHz = (v_ms * fc / 3.0e8).toFixed(1);
 
   return (
-    <div className="bg-[#F2F3E2] border border-[#CCD3B5] rounded-xl p-4 shadow-subtle space-y-4">
+    <div className="bg-[#F2F3E2] border border-[#CCD3B5] rounded-xl p-5 shadow-subtle space-y-4">
       {/* Header Row */}
-      <div className="flex items-center justify-between border-b border-[#CCD3B5]/70 pb-2.5">
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-md bg-[#789575]/20 flex items-center justify-center border border-[#789575]/30">
-            <Sliders size={14} className="text-[#263629]" />
+      <div className="flex items-center justify-between border-b border-[#CCD3B5]/60 pb-3">
+        <div className="flex items-center gap-2.5">
+          <div className="w-7 h-7 rounded-lg bg-[#EEF0DC] border border-[#CCD3B5] flex items-center justify-center text-[#556B52]">
+            <Sliders size={14} strokeWidth={1.5} />
           </div>
           <div>
-            <h2 className="text-xs font-black uppercase tracking-wider text-[#263629]">
-              3GPP Simulation Control Panel
+            <h2 className="text-xs font-semibold text-[#263629]">
+              Simulation parameters
             </h2>
-            <p className="text-[10px] text-[#647B62] font-medium">
-              Real-time parameter adjustment for 64×64 massive MIMO channel estimation
+            <p className="text-[11px] text-[#7A8C78]">
+              Channel settings for 64×64 massive MIMO array
             </p>
           </div>
         </div>
@@ -41,11 +41,11 @@ export default function Controls({
         <div className="flex items-center gap-2 text-xs">
           <span
             className={`w-2 h-2 rounded-full ${
-              backendOnline ? 'bg-[#789575] animate-pulse' : 'bg-rose-500'
+              backendOnline ? 'bg-[#789575]' : 'bg-rose-500'
             }`}
           />
-          <span className="text-[11px] font-mono text-[#647B62] font-semibold">
-            {backendOnline ? 'FastAPI Connected' : 'Connecting...'}
+          <span className="text-[11px] font-mono text-[#556B52]">
+            {backendOnline ? 'FastAPI connected' : 'Connecting...'}
           </span>
         </div>
       </div>
@@ -54,13 +54,13 @@ export default function Controls({
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
         {/* Col 1: Scenario Selection */}
         <div className="space-y-1.5">
-          <label className="text-[11px] font-bold text-[#647B62] block uppercase tracking-wider">
-            Channel Scenario
+          <label className="text-xs font-medium text-[#556B52] block">
+            Channel scenario
           </label>
           <select
             value={selectedScenario}
             onChange={(e) => setSelectedScenario(e.target.value)}
-            className="w-full bg-[#EEF0DC] border border-[#CCD3B5] focus:border-[#789575] rounded-lg px-2.5 py-1.5 text-xs text-[#263629] font-bold focus:outline-none transition shadow-sm cursor-pointer"
+            className="w-full bg-[#EEF0DC] border border-[#CCD3B5] focus:border-[#789575] rounded-lg px-3 py-1.5 text-xs text-[#263629] font-medium focus:outline-none transition cursor-pointer"
           >
             {scenarios.map((sc) => (
               <option key={sc.id} value={sc.id}>
@@ -68,18 +68,18 @@ export default function Controls({
               </option>
             ))}
           </select>
-          <span className="text-[9.5px] text-[#647B62] font-mono block">
-            Profile: <strong>{scenarios.find(s => s.id === selectedScenario)?.delay_spread || 'Standard TDL'}</strong>
+          <span className="text-[10px] text-[#7A8C78] font-mono block">
+            Profile: {scenarios.find(s => s.id === selectedScenario)?.delay_spread || 'Standard TDL'}
           </span>
         </div>
 
         {/* Col 2: SNR Setting */}
         <div className="space-y-1.5">
           <div className="flex justify-between items-center">
-            <label className="text-[11px] font-bold text-[#647B62] flex items-center gap-1 uppercase tracking-wider">
-              <Radio size={12} className="text-[#789575]" /> SNR Setting
+            <label className="text-xs font-medium text-[#556B52]">
+              SNR
             </label>
-            <span className="text-xs font-bold text-[#263629] font-mono bg-[#EEF0DC] border border-[#CCD3B5] px-2 py-0.5 rounded shadow-inner">
+            <span className="text-xs font-mono font-medium text-[#263629] bg-[#EEF0DC] border border-[#CCD3B5] px-2 py-0.5 rounded">
               {snr >= 0 ? `+${snr}` : snr} dB
             </span>
           </div>
@@ -97,11 +97,12 @@ export default function Controls({
             {[-10, 0, 10, 20].map((v) => (
               <button
                 key={v}
+                type="button"
                 onClick={() => setSnr(v)}
-                className={`text-[9px] font-mono px-1.5 py-0.5 rounded border transition cursor-pointer ${
+                className={`text-[10px] font-mono px-2 py-0.5 rounded border transition cursor-pointer ${
                   snr === v
                     ? 'bg-[#789575] text-[#F2F3E2] border-[#789575]'
-                    : 'bg-[#EEF0DC] text-[#647B62] border-[#CCD3B5] hover:bg-[#E5E8CE]'
+                    : 'bg-[#EEF0DC] text-[#556B52] border-[#CCD3B5] hover:bg-[#E5E8CE]'
                 }`}
               >
                 {v >= 0 ? `+${v}` : v}
@@ -113,10 +114,10 @@ export default function Controls({
         {/* Col 3: Vehicular Speed & Doppler */}
         <div className="space-y-1.5">
           <div className="flex justify-between items-center">
-            <label className="text-[11px] font-bold text-[#647B62] flex items-center gap-1 uppercase tracking-wider">
-              <Activity size={12} className="text-[#789575]" /> User Velocity
+            <label className="text-xs font-medium text-[#556B52]">
+              User velocity
             </label>
-            <span className="text-xs font-bold text-[#263629] font-mono bg-[#EEF0DC] border border-[#CCD3B5] px-2 py-0.5 rounded shadow-inner">
+            <span className="text-xs font-mono font-medium text-[#263629] bg-[#EEF0DC] border border-[#CCD3B5] px-2 py-0.5 rounded">
               {speed} km/h
             </span>
           </div>
@@ -129,38 +130,40 @@ export default function Controls({
             onChange={(e) => setSpeed(parseFloat(e.target.value))}
             className="w-full accent-[#789575] cursor-pointer h-1.5 bg-[#EEF0DC] rounded border border-[#CCD3B5]"
           />
-          <div className="flex justify-between items-center text-[9.5px] text-[#647B62] font-mono pt-0.5">
-            <span>Doppler: <strong className="text-[#263629]">{dopplerHz} Hz</strong></span>
-            <span>Array: <strong className="text-[#263629]">64×64</strong></span>
+          <div className="flex justify-between items-center text-[10px] text-[#7A8C78] font-mono pt-0.5">
+            <span>Doppler: {dopplerHz} Hz</span>
+            <span>Array: 64×64</span>
           </div>
         </div>
 
         {/* Col 4: Action Buttons */}
-        <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-2">
           <button
+            type="button"
             onClick={onRunEstimate}
             disabled={loadingEstimate || !backendOnline}
-            className="w-full flex items-center justify-center gap-1.5 bg-[#789575] hover:bg-[#668263] active:scale-[0.99] disabled:opacity-50 text-[#F2F3E2] font-bold py-2 px-3 rounded-lg shadow-sm transition text-xs cursor-pointer border border-[#789575]"
+            className="w-full h-8 flex items-center justify-center gap-1.5 bg-[#789575] hover:bg-[#668263] disabled:opacity-40 text-[#F2F3E2] font-medium px-3 rounded-lg transition text-xs cursor-pointer border border-[#789575]"
           >
             {loadingEstimate ? (
               <div className="w-3.5 h-3.5 border-2 border-[#F2F3E2] border-t-transparent rounded-full animate-spin" />
             ) : (
-              <Zap size={14} className="text-[#F2F3E2]" />
+              <Play size={13} strokeWidth={2} />
             )}
-            <span>{loadingEstimate ? 'Inferring...' : 'Run Real-Time Simulation'}</span>
+            <span>{loadingEstimate ? 'Estimating...' : 'Run estimation'}</span>
           </button>
 
           <button
+            type="button"
             onClick={onRunSweep}
             disabled={loadingSweep || !backendOnline}
-            className="w-full flex items-center justify-center gap-1.5 bg-[#EEF0DC] hover:bg-[#E5E8CE] disabled:opacity-50 text-[#263629] border border-[#CCD3B5] hover:border-[#789575] font-bold py-1.5 px-3 rounded-lg transition text-xs cursor-pointer shadow-sm"
+            className="w-full h-8 flex items-center justify-center gap-1.5 bg-[#EEF0DC] hover:bg-[#E5E8CE] disabled:opacity-40 text-[#263629] border border-[#CCD3B5] hover:border-[#789575] font-medium px-3 rounded-lg transition text-xs cursor-pointer"
           >
             {loadingSweep ? (
               <div className="w-3.5 h-3.5 border-2 border-[#789575] border-t-transparent rounded-full animate-spin" />
             ) : (
-              <TrendingUp size={13} className="text-[#789575]" />
+              <TrendingUp size={13} strokeWidth={1.5} className="text-[#556B52]" />
             )}
-            <span>{loadingSweep ? 'Running Sweep...' : 'Run Full SNR Sweep'}</span>
+            <span>{loadingSweep ? 'Sweeping...' : 'Run SNR sweep'}</span>
           </button>
         </div>
       </div>

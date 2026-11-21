@@ -6,10 +6,9 @@ import {
   ShieldCheck, 
   Layers, 
   BarChart3, 
-  Sparkles,
   Server,
   Activity,
-  Zap,
+  Play,
   Camera,
   SlidersHorizontal,
   ChevronRight,
@@ -192,52 +191,51 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#E5E8CE] text-[#263629] flex flex-col antialiased selection:bg-[#789575] selection:text-[#F2F3E2]">
       {/* Top Header */}
-      <header className="border-b border-[#CCD3B5] bg-[#EEF0DC]/95 backdrop-blur-xl sticky top-0 z-40 shadow-subtle">
+      <header className="border-b border-[#CCD3B5] bg-[#EEF0DC]/95 backdrop-blur-xl sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           {/* Logo & Paper Title */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#789575] border border-[#789575] flex items-center justify-center shadow-sm">
-              <Radio className="text-[#F2F3E2]" size={22} />
+            <div className="w-9 h-9 rounded-lg bg-[#789575] flex items-center justify-center text-[#F2F3E2] shadow-xs">
+              <Radio size={20} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-base font-black text-[#263629] tracking-tight">
-                  Massive MIMO AI Channel Studio
+                <h1 className="text-sm sm:text-base font-semibold text-[#263629] tracking-tight">
+                  Massive MIMO Channel Estimation Testbed
                 </h1>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-[#789575]/20 text-[#263629] border border-[#789575]/40 uppercase tracking-wider">
-                  v2.1 Scientific Suite
+                <span className="px-1.5 py-0.5 rounded text-[11px] font-mono font-medium bg-[#E5E8CE] text-[#647B62] border border-[#CCD3B5]">
+                  VehCom 2026
                 </span>
               </div>
-              <p className="text-xs text-[#647B62] font-medium">
-                Attention-Based Residual Learning Channel Estimation for Massive MIMO
+              <p className="text-xs text-[#647B62] font-normal">
+                Attention-based residual learning for 3GPP and 6G Sub-THz channels
               </p>
             </div>
           </div>
 
           {/* Quick Status & Chart Tools Button */}
-          <div className="flex items-center gap-3 text-xs">
-            <div className="hidden md:flex items-center gap-2 bg-[#E5E8CE] px-3 py-1.5 rounded-lg border border-[#CCD3B5] shadow-inner">
-              <Server size={14} className="text-[#647B62]" />
-              <span className="text-[#647B62] font-medium hidden sm:inline">FastAPI:</span>
-              <span className={`font-mono font-bold flex items-center gap-1.5 ${backendOnline ? 'text-[#263629]' : 'text-rose-600'}`}>
-                <span className={`w-1.5 h-1.5 rounded-full ${backendOnline ? 'bg-emerald-600' : 'bg-rose-500 animate-pulse'}`} />
-                {backendOnline ? 'Active (Cloud)' : 'Connecting...'}
+          <div className="flex items-center gap-2.5 text-xs">
+            <div className="hidden md:flex items-center gap-2 bg-[#E5E8CE] px-2.5 py-1 rounded-md border border-[#CCD3B5]">
+              <Server size={13} className="text-[#647B62]" />
+              <span className="text-[#647B62] text-[11px]">Backend:</span>
+              <span className={`font-mono text-[11px] font-medium flex items-center gap-1.5 ${backendOnline ? 'text-[#263629]' : 'text-[#8A4A4A]'}`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${backendOnline ? 'bg-emerald-600' : 'bg-rose-500'}`} />
+                {backendOnline ? 'Connected' : 'Connecting...'}
               </span>
             </div>
 
-            <div className="hidden sm:flex items-center gap-1.5 bg-[#789575]/15 text-[#263629] px-3 py-1.5 rounded-lg border border-[#789575]/40 font-bold font-mono">
-              <Sparkles size={14} className="text-[#789575]" />
-              <span>64×64 Array</span>
+            <div className="hidden sm:inline-flex items-center gap-1 bg-[#E5E8CE] text-[#263629] px-2.5 py-1 rounded-md border border-[#CCD3B5] font-mono text-xs">
+              <span>64×64 UPA</span>
             </div>
 
             {/* Chart Tools & Exports Drawer Toggle */}
             <button
               onClick={() => setSidebarOpen(true)}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg font-bold transition cursor-pointer border bg-[#789575] hover:bg-[#668263] text-[#F2F3E2] border-[#789575] shadow-sm active:scale-[0.98]"
-              title="Open Chart Tools, Pan/Box Modes, and Scientific Exports"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition cursor-pointer border bg-[#789575] hover:bg-[#668263] text-[#F2F3E2] border-[#789575] shadow-xs"
+              title="Open chart tools and scientific exports"
             >
-              <Camera size={15} />
-              <span className="text-xs">Tools & Downloads</span>
+              <Camera size={14} />
+              <span>Tools & exports</span>
             </button>
           </div>
         </div>
@@ -330,47 +328,47 @@ export default function App() {
 
         {/* Clean Segmented Navigation Tab Control */}
         <div className="flex items-center justify-between border-b border-[#CCD3B5] pb-2">
-          <div className="inline-flex bg-[#EEF0DC] p-1 rounded-xl border border-[#CCD3B5] shadow-inner text-xs font-bold gap-1">
+          <div className="inline-flex bg-[#EEF0DC] p-1 rounded-lg border border-[#CCD3B5] text-xs font-medium gap-1">
             <button
               onClick={() => setActiveTab('heatmaps')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg transition cursor-pointer ${
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition cursor-pointer ${
                 activeTab === 'heatmaps'
-                  ? 'bg-[#789575] text-[#F2F3E2] shadow-sm'
+                  ? 'bg-[#789575] text-[#F2F3E2] shadow-xs'
                   : 'text-[#647B62] hover:text-[#263629]'
               }`}
             >
               <Layers size={14} />
-              <span>Spatial Channel Heatmaps (3GPP TDL)</span>
+              <span>Spatial channel heatmaps</span>
             </button>
 
             <button
               onClick={() => setActiveTab('sweep')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg transition cursor-pointer ${
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition cursor-pointer ${
                 activeTab === 'sweep'
-                  ? 'bg-[#789575] text-[#F2F3E2] shadow-sm'
+                  ? 'bg-[#789575] text-[#F2F3E2] shadow-xs'
                   : 'text-[#647B62] hover:text-[#263629]'
               }`}
             >
               <BarChart3 size={14} />
-              <span>SNR vs NMSE Benchmark Sweep</span>
+              <span>SNR sweep benchmark</span>
             </button>
 
             <button
               onClick={() => setActiveTab('matlab_6g')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg transition cursor-pointer ${
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition cursor-pointer ${
                 activeTab === 'matlab_6g'
-                  ? 'bg-[#789575] text-[#F2F3E2] shadow-sm'
+                  ? 'bg-[#789575] text-[#F2F3E2] shadow-xs'
                   : 'text-[#647B62] hover:text-[#263629]'
               }`}
             >
-              <Zap size={14} />
-              <span>6G Sub-THz & MATLAB Studio</span>
+              <Play size={14} />
+              <span>6G Sub-THz studio</span>
             </button>
           </div>
 
           <div className="flex items-center gap-3">
             {/* Quick Chart Tools Mode indicator */}
-            <div className="hidden sm:flex items-center gap-1.5 text-xs font-mono text-[#647B62] bg-[#EEF0DC] border border-[#CCD3B5] px-2.5 py-1 rounded-lg">
+            <div className="hidden sm:flex items-center gap-1.5 text-xs font-mono text-[#647B62] bg-[#EEF0DC] border border-[#CCD3B5] px-2.5 py-1 rounded-md">
               <span>Mode:</span>
               <strong className="text-[#263629] capitalize">{chartDragMode}</strong>
               <button
@@ -382,7 +380,7 @@ export default function App() {
               </button>
             </div>
 
-            <span className="text-xs font-mono text-[#647B62] font-semibold hidden md:inline">
+            <span className="text-xs font-mono text-[#647B62] hidden md:inline">
               Array: <strong className="text-[#263629]">64×64 Massive MIMO</strong>
             </span>
           </div>
@@ -408,42 +406,42 @@ export default function App() {
             />
 
             {/* 2. Controls bar above heatmaps */}
-            <div className="flex flex-wrap items-center justify-between gap-3 bg-[#F2F3E2] border border-[#CCD3B5] rounded-xl px-4 py-2.5 shadow-subtle">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-black uppercase text-[#263629] tracking-wider">
-                  3GPP {selectedScenario} Spatial Channel Grid
+            <div className="flex flex-wrap items-center justify-between gap-3 bg-[#F2F3E2] border border-[#CCD3B5] rounded-lg px-4 py-2.5">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-xs font-semibold text-[#263629]">
+                  3GPP {selectedScenario} spatial channel grid
                 </span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#EEF0DC] text-[#263629] border border-[#CCD3B5]">
+                <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#EEF0DC] text-[#263629] border border-[#CCD3B5]">
                   SNR: {snr} dB
                 </span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#EEF0DC] text-[#263629] border border-[#CCD3B5]">
+                <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#EEF0DC] text-[#263629] border border-[#CCD3B5]">
                   Mobility: {speed} km/h
                 </span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#EEF0DC] text-[#263629] border border-[#CCD3B5]">
-                  Grid: 64×64 Massive MIMO Array
+                <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#EEF0DC] text-[#263629] border border-[#CCD3B5]">
+                  Grid: 64×64 UPA
                 </span>
               </div>
 
               <div className="flex items-center gap-3">
-                <label className="flex items-center gap-1.5 text-xs text-[#647B62] font-medium cursor-pointer">
+                <label className="flex items-center gap-1.5 text-xs text-[#647B62] font-normal cursor-pointer">
                   <input
                     type="checkbox"
                     checked={sharedColorScaleTDL}
                     onChange={(e) => setSharedColorScaleTDL(e.target.checked)}
                     className="accent-[#789575] rounded"
                   />
-                  <span>Shared Z-scale (H, Hn, Ĥ)</span>
+                  <span>Shared Z-scale</span>
                 </label>
 
                 <button
                   onClick={handleRunEstimate}
                   disabled={loadingEstimate}
-                  className="flex items-center gap-1.5 bg-[#789575] hover:bg-[#668263] active:scale-[0.99] disabled:opacity-50 text-[#F2F3E2] font-bold py-1 px-3 rounded-lg shadow-sm transition text-xs cursor-pointer border border-[#789575]"
+                  className="flex items-center gap-1.5 bg-[#789575] hover:bg-[#668263] disabled:opacity-50 text-[#F2F3E2] font-medium py-1 px-3 rounded-md shadow-xs transition text-xs cursor-pointer border border-[#789575]"
                 >
                   {loadingEstimate ? (
-                    <div className="w-3.5 h-3.5 border-2 border-[#F2F3E2] border-t-transparent rounded-full animate-spin" />
+                    <div className="w-3 h-3 border-2 border-[#F2F3E2] border-t-transparent rounded-full animate-spin" />
                   ) : (
-                    <Zap size={13} />
+                    <Play size={13} />
                   )}
                   <span>{loadingEstimate ? 'Estimating...' : 'Re-estimate'}</span>
                 </button>
@@ -515,47 +513,47 @@ export default function App() {
 
             {/* 4. Performance Summary Table */}
             {estimateData?.results && (
-              <div className="bg-[#F2F3E2] border border-[#CCD3B5] rounded-xl p-4 shadow-subtle overflow-x-auto">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-[#647B62] mb-3">
-                  Statistical Performance Summary ({selectedScenario} @ {snr} dB)
+              <div className="bg-[#F2F3E2] border border-[#CCD3B5] rounded-lg p-4 overflow-x-auto">
+                <h4 className="text-xs font-semibold text-[#263629] mb-3">
+                  Estimation benchmark summary ({selectedScenario} @ {snr} dB)
                 </h4>
                 <table className="w-full text-xs text-left">
                   <thead>
-                    <tr className="border-b border-[#CCD3B5] text-[#647B62]">
-                      <th className="py-2 px-3">Estimator</th>
-                      <th className="py-2 px-3">Method Type</th>
-                      <th className="py-2 px-3">Parameters</th>
-                      <th className="py-2 px-3">NMSE (dB)</th>
-                      <th className="py-2 px-3">Latency</th>
+                    <tr className="border-b border-[#CCD3B5] text-[#647B62] text-[11px]">
+                      <th className="py-2 px-3 font-medium">Estimator</th>
+                      <th className="py-2 px-3 font-medium">Method type</th>
+                      <th className="py-2 px-3 font-medium">Parameters</th>
+                      <th className="py-2 px-3 font-medium">NMSE (dB)</th>
+                      <th className="py-2 px-3 font-medium">Latency</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#CCD3B5]/70 font-mono">
-                    <tr className="bg-[#789575]/15 font-bold">
-                      <td className="py-2.5 px-3 text-[#263629]">NCRT (Proposed)</td>
-                      <td className="py-2.5 px-3 text-[#263629] font-sans">Attention Residual Transformer</td>
+                  <tbody className="divide-y divide-[#CCD3B5]/60 font-mono text-[11px]">
+                    <tr className="bg-[#789575]/10">
+                      <td className="py-2.5 px-3 font-medium text-[#263629]">NCRT (Proposed)</td>
+                      <td className="py-2.5 px-3 text-[#263629] font-sans">Attention residual transformer</td>
                       <td className="py-2.5 px-3">888,202</td>
-                      <td className="py-2.5 px-3 text-[#263629] font-black">{estimateData.results.ncrt?.nmse_db} dB</td>
+                      <td className="py-2.5 px-3 text-[#263629] font-semibold">{estimateData.results.ncrt?.nmse_db} dB</td>
                       <td className="py-2.5 px-3">{estimateData.results.ncrt?.latency_ms} ms</td>
                     </tr>
                     {estimateData.results.ncrn && (
                       <tr className="text-[#263629]">
-                        <td className="py-2.5 px-3">NCRN Baseline</td>
-                        <td className="py-2.5 px-3 text-[#647B62] font-sans">ConvLSTM Residual</td>
+                        <td className="py-2.5 px-3 font-medium">NCRN baseline</td>
+                        <td className="py-2.5 px-3 text-[#647B62] font-sans">ConvLSTM residual</td>
                         <td className="py-2.5 px-3">1,204,610</td>
                         <td className="py-2.5 px-3">{estimateData.results.ncrn.nmse_db} dB</td>
                         <td className="py-2.5 px-3">{estimateData.results.ncrn.latency_ms} ms</td>
                       </tr>
                     )}
                     <tr className="text-[#263629]">
-                      <td className="py-2.5 px-3">Wiener MMSE</td>
-                      <td className="py-2.5 px-3 font-sans text-[#647B62]">Statistical Reference</td>
+                      <td className="py-2.5 px-3 font-medium">Wiener MMSE</td>
+                      <td className="py-2.5 px-3 font-sans text-[#647B62]">Statistical reference</td>
                       <td className="py-2.5 px-3">--</td>
                       <td className="py-2.5 px-3">{estimateData.results.mmse?.nmse_db} dB</td>
                       <td className="py-2.5 px-3">{estimateData.results.mmse?.latency_ms} ms</td>
                     </tr>
                     <tr className="text-[#647B62]">
-                      <td className="py-2.5 px-3">Least Squares (LS)</td>
-                      <td className="py-2.5 px-3 font-sans">Classical Unprocessed</td>
+                      <td className="py-2.5 px-3 font-medium">Least Squares (LS)</td>
+                      <td className="py-2.5 px-3 font-sans">Unprocessed observation</td>
                       <td className="py-2.5 px-3">0</td>
                       <td className="py-2.5 px-3">{estimateData.results.ls?.nmse_db} dB</td>
                       <td className="py-2.5 px-3">{estimateData.results.ls?.latency_ms} ms</td>
@@ -600,118 +598,105 @@ export default function App() {
       {!sidebarOpen && (
         <button
           onClick={() => setSidebarOpen(true)}
-          className="fixed bottom-6 right-6 z-30 flex items-center gap-2 bg-[#789575] hover:bg-[#668263] text-[#F2F3E2] px-4 py-2.5 rounded-full shadow-lg border border-[#789575] font-bold text-xs cursor-pointer transition transform hover:scale-105 active:scale-95"
-          title="Open Chart Tools, Pan/Box Modes, and Scientific Exports"
+          className="fixed bottom-6 right-6 z-30 flex items-center gap-2 bg-[#789575] hover:bg-[#668263] text-[#F2F3E2] px-3.5 py-2 rounded-lg shadow-md border border-[#789575] font-medium text-xs cursor-pointer transition"
+          title="Open chart tools and scientific exports"
         >
-          <Camera size={15} />
-          <span>Chart Tools & Downloads</span>
+          <Camera size={14} />
+          <span>Tools & exports</span>
         </button>
       )}
 
-      {/* Modern Professional Frontend Footer */}
+      {/* Modern Scientific Footer */}
       <footer className="border-t border-[#CCD3B5] bg-[#EEF0DC] mt-auto text-xs text-[#647B62]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
             {/* Col 1: Brand & Abstract */}
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-[#789575] flex items-center justify-center text-[#F2F3E2] shadow-sm">
-                  <Radio size={18} />
+                <div className="w-7 h-7 rounded-md bg-[#789575] flex items-center justify-center text-[#F2F3E2] shadow-xs">
+                  <Radio size={16} />
                 </div>
-                <span className="text-sm font-black text-[#263629] tracking-tight">
-                  Massive MIMO AI Studio
+                <span className="text-xs font-semibold text-[#263629]">
+                  Massive MIMO AI Channel Studio
                 </span>
               </div>
               <p className="text-[11px] leading-relaxed text-[#647B62]">
                 Attention-based residual learning channel estimation platform for 5G-Advanced and 6G Sub-THz Massive MIMO systems.
               </p>
-              <div className="flex flex-wrap gap-1.5 pt-1">
-                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#E5E8CE] text-[#263629] border border-[#CCD3B5]">
-                  v2.1 Suite
+              <div className="flex flex-wrap gap-1.5 pt-0.5">
+                <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-[#E5E8CE] text-[#647B62] border border-[#CCD3B5]">
+                  VehCom 2026
                 </span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#789575]/20 text-[#263629] border border-[#789575]/40">
-                  O-RAN Near-RT
-                </span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#E5E8CE] text-[#263629] border border-[#CCD3B5]">
-                  64×64 Array
+                <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-[#E5E8CE] text-[#647B62] border border-[#CCD3B5]">
+                  64×64 UPA
                 </span>
               </div>
             </div>
 
             {/* Col 2: Neural Architectures */}
-            <div className="space-y-2.5">
-              <h4 className="text-[11px] font-black uppercase tracking-wider text-[#263629]">
-                Neural Architectures
+            <div className="space-y-2">
+              <h4 className="text-[11px] font-semibold text-[#263629]">
+                Neural architectures
               </h4>
               <ul className="space-y-1.5 text-[11px] text-[#263629]/90">
                 <li className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#789575]" />
-                  <strong>NCRT:</strong> Attention-Residual Transformer (888K)
+                  <span><strong>NCRT:</strong> Attention residual transformer (888K)</span>
                 </li>
                 <li className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#A7B99A]" />
-                  <strong>NCRN:</strong> ConvLSTM Spatial-Temporal Baseline (1.20M)
+                  <span><strong>NCRN:</strong> ConvLSTM spatial-temporal baseline (1.20M)</span>
                 </li>
                 <li className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#CCD3B5]" />
-                  <strong>Wiener MMSE:</strong> Statistical Covariance Benchmark
+                  <span><strong>Wiener MMSE:</strong> Statistical covariance benchmark</span>
                 </li>
                 <li className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#CCD3B5]" />
-                  <strong>Least Squares (LS):</strong> Unprocessed Observation
+                  <span><strong>Least Squares:</strong> Unprocessed observation</span>
                 </li>
               </ul>
             </div>
 
             {/* Col 3: Specifications & Protocols */}
-            <div className="space-y-2.5">
-              <h4 className="text-[11px] font-black uppercase tracking-wider text-[#263629]">
-                Channels & Standards
+            <div className="space-y-2">
+              <h4 className="text-[11px] font-semibold text-[#263629]">
+                Channels & standards
               </h4>
               <ul className="space-y-1.5 text-[11px] text-[#263629]/90">
-                <li className="hover:text-[#263629] transition cursor-default">
-                  • 3GPP TR 38.901 Standards (TDL-A through TDL-E)
-                </li>
-                <li className="hover:text-[#263629] transition cursor-default">
-                  • 142 GHz Sub-THz Ray-Tracing Models (MATLAB)
-                </li>
-                <li className="hover:text-[#263629] transition cursor-default">
-                  • Virtual Beamspace 2D-FFT Angular Sparsity
-                </li>
-                <li className="hover:text-[#263629] transition cursor-default">
-                  • High-Doppler Mobility Support (Up to 500 km/h)
-                </li>
-                <li className="hover:text-[#263629] transition cursor-default">
-                  • Physical Geometry: 64×64 Planar Array (UPA/ULA)
-                </li>
+                <li>• 3GPP TR 38.901 standard models (TDL-A through TDL-E)</li>
+                <li>• 142 GHz Sub-THz ray-tracing dataset (MATLAB)</li>
+                <li>• Virtual beamspace 2D-FFT angular representation</li>
+                <li>• High-Doppler mobility support (up to 500 km/h)</li>
+                <li>• Physical geometry: 64×64 planar array</li>
               </ul>
             </div>
 
             {/* Col 4: Artifact Downloads & Citation */}
-            <div className="space-y-2.5">
-              <h4 className="text-[11px] font-black uppercase tracking-wider text-[#263629]">
-                Research Artifacts
+            <div className="space-y-2">
+              <h4 className="text-[11px] font-semibold text-[#263629]">
+                Research artifacts
               </h4>
               <div className="flex flex-col gap-1.5">
                 <a
                   href={`${getApiBase()}/download/model`}
-                  className="inline-flex items-center justify-between px-2.5 py-1.5 rounded bg-[#E5E8CE] hover:bg-[#F2F3E2] border border-[#CCD3B5] text-[11px] font-semibold text-[#263629] transition shadow-xs"
+                  className="inline-flex items-center justify-between px-2.5 py-1.5 rounded-md bg-[#E5E8CE] hover:bg-[#F2F3E2] border border-[#CCD3B5] text-[11px] font-medium text-[#263629] transition"
                 >
-                  <span>Trained Model Weights</span>
+                  <span>Trained model weights</span>
                   <span className="font-mono text-[10px] text-[#789575]">.keras</span>
                 </a>
                 <a
                   href={`${getApiBase()}/download/csv/6g`}
-                  className="inline-flex items-center justify-between px-2.5 py-1.5 rounded bg-[#E5E8CE] hover:bg-[#F2F3E2] border border-[#CCD3B5] text-[11px] font-semibold text-[#263629] transition shadow-xs"
+                  className="inline-flex items-center justify-between px-2.5 py-1.5 rounded-md bg-[#E5E8CE] hover:bg-[#F2F3E2] border border-[#CCD3B5] text-[11px] font-medium text-[#263629] transition"
                 >
-                  <span>500-Sample Benchmark</span>
+                  <span>500-sample benchmark</span>
                   <span className="font-mono text-[10px] text-[#789575]">.csv</span>
                 </a>
                 <a
                   href={`${getApiBase()}/download/release-zip`}
-                  className="inline-flex items-center justify-between px-2.5 py-1.5 rounded bg-[#789575] hover:bg-[#668263] text-[#F2F3E2] text-[11px] font-bold transition shadow-xs"
+                  className="inline-flex items-center justify-between px-2.5 py-1.5 rounded-md bg-[#789575] hover:bg-[#668263] text-[#F2F3E2] text-[11px] font-medium transition"
                 >
-                  <span>Full Research Archive</span>
+                  <span>Complete research archive</span>
                   <span className="font-mono text-[10px] text-[#E5E8CE]">.zip</span>
                 </a>
               </div>
@@ -719,19 +704,19 @@ export default function App() {
           </div>
 
           {/* Bottom Bar */}
-          <div className="border-t border-[#CCD3B5] pt-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px]">
+          <div className="border-t border-[#CCD3B5] pt-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px]">
             <p className="text-[#647B62]">
-              © 2026 Massive MIMO AI Channel Studio • Published in <em>Vehicular Communications</em> (Elsevier).
+              Published in <em>Vehicular Communications</em> (Elsevier) • Open research artifact.
             </p>
             <div className="flex items-center gap-3 font-mono text-[10px]">
-              <div className="flex items-center gap-1.5 font-bold">
-                <span className={`w-2 h-2 rounded-full ${backendOnline ? 'bg-emerald-600 animate-pulse' : 'bg-rose-500'}`} />
+              <div className="flex items-center gap-1.5">
+                <span className={`w-1.5 h-1.5 rounded-full ${backendOnline ? 'bg-emerald-600' : 'bg-rose-500'}`} />
                 <span className={backendOnline ? 'text-emerald-800' : 'text-rose-600'}>
-                  {backendOnline ? 'FastAPI Cloud Active' : 'Connecting to Cloud Backend...'}
+                  {backendOnline ? 'Backend online' : 'Connecting to backend...'}
                 </span>
               </div>
               <span>•</span>
-              <span className="text-[#263629] font-bold">64×64 Massive Array</span>
+              <span className="text-[#263629]">64×64 UPA</span>
             </div>
           </div>
         </div>

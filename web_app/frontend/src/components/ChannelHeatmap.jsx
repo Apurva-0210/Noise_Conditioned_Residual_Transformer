@@ -86,20 +86,20 @@ export default function ChannelHeatmap({
   };
 
   return (
-    <div className={`bg-[#F2F3E2] rounded-xl p-3.5 shadow-subtle flex flex-col justify-between border transition-all duration-200 ${
+    <div className={`bg-[#F2F3E2] rounded-lg p-3.5 flex flex-col justify-between border transition-colors ${
       highlight 
-        ? 'border-[#789575] ring-1 ring-[#789575]/30' 
-        : 'border-[#CCD3B5] hover:border-[#A7B99A]'
+        ? 'border-[#789575]' 
+        : 'border-[#CCD3B5]'
     }`}>
       {/* Header */}
       <div className="flex items-start justify-between gap-1.5 mb-2">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-1.5 flex-wrap">
-            <h3 className="text-xs font-black tracking-wide uppercase text-[#263629]">
+            <h3 className="text-xs font-semibold text-[#263629]">
               {title}
             </h3>
             {badgeText && (
-              <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold font-mono border shrink-0 ${
+              <span className={`text-[10px] px-1.5 py-0.2 rounded font-mono font-medium border shrink-0 ${
                 isErrorMatrix 
                   ? 'bg-[#F9E6E6] text-[#9C4141] border-[#9C4141]/30'
                   : 'bg-[#789575] text-[#F2F3E2] border-[#789575]'
@@ -109,7 +109,7 @@ export default function ChannelHeatmap({
             )}
           </div>
           {subtitle && (
-            <p className="text-[10px] text-[#647B62] font-medium mt-0.5 leading-snug">
+            <p className="text-[10px] text-[#647B62] mt-0.5 leading-snug">
               {subtitle}
             </p>
           )}
@@ -130,7 +130,7 @@ export default function ChannelHeatmap({
             <select
               value={colorscale}
               onChange={(e) => setColorscale(e.target.value)}
-              className="bg-transparent text-[#263629] font-semibold focus:outline-none cursor-pointer text-[9px]"
+              className="bg-transparent text-[#263629] font-medium focus:outline-none cursor-pointer text-[9px]"
               title="Select colormap"
             >
               <option value="Viridis">Viridis</option>
@@ -143,7 +143,7 @@ export default function ChannelHeatmap({
           </div>
 
           <span 
-            className="text-[9px] px-1.5 py-0.5 rounded bg-[#EEF0DC] text-[#263629] font-mono font-bold border border-[#CCD3B5]"
+            className="text-[9px] px-1.5 py-0.5 rounded bg-[#EEF0DC] text-[#263629] font-mono border border-[#CCD3B5]"
             title={`Sampled grid: ${dim}×${dim} (Full physical array: 64×64)`}
           >
             {dim}×{dim}

@@ -102,27 +102,27 @@ export default function PerformanceCurve({ sweepData, is6G = false }) {
   };
 
   return (
-    <div className="bg-[#F2F3E2] border border-[#CCD3B5] rounded-xl p-4 shadow-subtle flex flex-col space-y-3">
+    <div className="bg-[#F2F3E2] border border-[#CCD3B5] rounded-lg p-4 flex flex-col space-y-3">
       {/* Chart Title and Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#CCD3B5]/70 pb-3">
         <div>
           <div className="flex items-center gap-2">
-            <h3 className="text-sm font-black text-[#263629] tracking-wide">
-              Monte Carlo Channel Estimation Benchmark
+            <h3 className="text-sm font-semibold text-[#263629] tracking-tight">
+              Monte Carlo channel estimation benchmark
             </h3>
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#789575] text-[#F2F3E2] font-mono font-bold">
+            <span className="text-[10px] px-2 py-0.5 rounded bg-[#789575] text-[#F2F3E2] font-mono">
               NMSE in dB
             </span>
           </div>
-          <p className="text-[11px] text-[#647B62] font-medium mt-0.5">
-            Scenario: <strong className="text-[#263629] font-mono">{scenario}</strong> • Massive MIMO 64×64 Array • Lower is better
+          <p className="text-[11px] text-[#647B62] mt-0.5">
+            Scenario: <strong className="text-[#263629] font-mono">{scenario}</strong> • 64×64 UPA • Lower is better
           </p>
         </div>
 
         {/* Export CSV button */}
         <button
           onClick={handleDownloadCsv}
-          className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#EEF0DC] hover:bg-[#F2F3E2] border border-[#CCD3B5] text-[#263629] text-xs font-bold transition shadow-sm shrink-0 self-start sm:self-center"
+          className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#EEF0DC] hover:bg-[#F2F3E2] border border-[#CCD3B5] text-[#263629] text-xs font-medium transition shrink-0 self-start sm:self-center"
           title="Download benchmark data as CSV"
         >
           <FileSpreadsheet size={13} className="text-[#789575]" />
@@ -131,7 +131,7 @@ export default function PerformanceCurve({ sweepData, is6G = false }) {
       </div>
 
       {/* Plotly Canvas */}
-      <div className="w-full h-[320px] overflow-hidden bg-[#F5F5E9] rounded-lg border border-[#CCD3B5]/60">
+      <div className="w-full h-[320px] overflow-hidden bg-[#F5F5E9] rounded-md border border-[#CCD3B5]/60">
         <Plot
           data={traces}
           layout={{
@@ -169,30 +169,30 @@ export default function PerformanceCurve({ sweepData, is6G = false }) {
       </div>
 
       {/* Scientific Benchmark Information Panel (Section 6) */}
-      <div className="bg-[#EEF0DC] p-2.5 rounded-lg border border-[#CCD3B5] text-[10px] text-[#647B62] font-mono grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+      <div className="bg-[#EEF0DC] p-2.5 rounded-md border border-[#CCD3B5] text-[10px] text-[#647B62] font-mono grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
         <div>
-          <span className="block text-[9px] uppercase font-bold text-[#647B62]/80">Dataset:</span>
-          <span className="text-[#263629] font-bold">{is6G ? 'MATLAB 142 GHz' : '3GPP TR 38.901'}</span>
+          <span className="block text-[9px] text-[#647B62]">Dataset:</span>
+          <span className="text-[#263629] font-medium">{is6G ? 'MATLAB 142 GHz' : '3GPP TR 38.901'}</span>
         </div>
         <div>
-          <span className="block text-[9px] uppercase font-bold text-[#647B62]/80">Scenario:</span>
-          <span className="text-[#263629] font-bold">{scenario}</span>
+          <span className="block text-[9px] text-[#647B62]">Scenario:</span>
+          <span className="text-[#263629] font-medium">{scenario}</span>
         </div>
         <div>
-          <span className="block text-[9px] uppercase font-bold text-[#647B62]/80">SNR Range:</span>
-          <span className="text-[#263629] font-bold">−15 to +20 dB</span>
+          <span className="block text-[9px] text-[#647B62]">SNR Range:</span>
+          <span className="text-[#263629] font-medium">−15 to +20 dB</span>
         </div>
         <div>
-          <span className="block text-[9px] uppercase font-bold text-[#647B62]/80">Realizations:</span>
-          <span className="text-[#263629] font-bold">500 Samples</span>
+          <span className="block text-[9px] text-[#647B62]">Realizations:</span>
+          <span className="text-[#263629] font-medium">500 samples</span>
         </div>
         <div>
-          <span className="block text-[9px] uppercase font-bold text-[#647B62]/80">Model Weights:</span>
-          <span className="text-[#263629] font-bold">{is6G ? 'ncrt_6g.keras' : 'ncrt_tdl_64.keras'}</span>
+          <span className="block text-[9px] text-[#647B62]">Model Weights:</span>
+          <span className="text-[#263629] font-medium">{is6G ? 'ncrt_6g.keras' : 'ncrt_tdl_64.keras'}</span>
         </div>
         <div>
-          <span className="block text-[9px] uppercase font-bold text-[#647B62]/80">Evaluation:</span>
-          <span className="text-[#263629] font-bold">VehCom Baseline</span>
+          <span className="block text-[9px] text-[#647B62]">Evaluation:</span>
+          <span className="text-[#263629] font-medium">VehCom Baseline</span>
         </div>
       </div>
     </div>
