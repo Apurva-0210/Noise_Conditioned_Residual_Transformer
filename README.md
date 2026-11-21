@@ -97,6 +97,10 @@ VehCom_Release/
 │   ├── ablations/          # Three-seed models (seeds 42, 100, 2024)
 │   └── sa_dlcs_wang/       # 12 adapted Sa-DLCS models (arithmetic/harmonic × Wang/curriculum × 3 seeds)
 ├── scripts/                # Evaluation and reproducibility scripts
+├── web_app/                # Interactive React Frontend & FastAPI Backend Web Studio
+│   ├── backend/            # FastAPI Python REST API for real-time model inference
+│   ├── frontend/           # Pure JavaScript React Dashboard (Vite, Tailwind, Plotly.js)
+│   └── start.sh            # Single-command launcher for web application
 ├── outputs/
 │   ├── csv/                # Numerical CSVs behind the tables
 │   └── figures/            # Vector figures (PDF/PNG)
@@ -137,6 +141,15 @@ docker compose run --rm ncrt
 # Or run the evaluation pipeline directly (outputs persist to host ./outputs):
 docker build -t ncrt-vehcom .
 docker run -it --rm -v $(pwd)/outputs:/workspace/outputs ncrt-vehcom bash eval_all.sh
+```
+
+### Option C: Interactive Web Studio (React + FastAPI)
+Launch the interactive 2D MIMO heatmap dashboard and live SNR benchmark:
+
+```bash
+cd web_app
+./start.sh
+# Open http://localhost:5173 in your browser
 ```
 
 Tested package ranges:
