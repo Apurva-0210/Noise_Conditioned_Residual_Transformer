@@ -159,7 +159,21 @@ class MatlabEstimateRequest(BaseModel):
     snr_db: float = Field(default=5.0, ge=-25.0, le=30.0)
 
 # --- Routes ---
-@app.get("/api/health")
+@app.api_route("/", methods=["GET", "HEAD"])
+def root():
+    return {
+        "name": "Massive MIMO AI Channel Studio API",
+        "status": "online",
+        "version": "2.1.0",
+        "health": "/api/health",
+        "docs": "/docs",
+    }
+
+@app.api_route("/healthz", methods=["GET", "HEAD"])
+def healthz():
+    return {"status": "ok"}
+
+@app.api_route("/api/health", methods=["GET", "HEAD"])
 def health_check():
     return {
         "status": "online",
