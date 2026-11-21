@@ -28,7 +28,13 @@ sys.path.insert(0, os.path.join(VEHCOM_DIR, "stage2_tdl", "ncrt"))
 sys.path.insert(0, os.path.join(VEHCOM_DIR, "stage2_tdl", "ncrn"))
 sys.path.insert(0, os.path.join(VEHCOM_DIR, "stage2_tdl", "trust_net"))
 
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+import gc
+
+# Configure low-memory and single-thread execution for cloud hosting (e.g., Render Free Tier 512MB RAM)
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["TF_NUM_INTRAOP_THREADS"] = "1"
+os.environ["TF_NUM_INTEROP_THREADS"] = "1"
 import tensorflow as tf
 
 from shared.channels import gen_tdl_random, gen_tdl_channel, SNAMES
@@ -64,46 +70,50 @@ try:
 except Exception:
     SafeDense = None
 
-def load_models():
-    """Load pretrained Keras models into memory with robust fallback."""
+def get_model(name: str):
+    """Dynamically load model into memory on-demand to protect Render 512MB RAM limit."""
+    if name in MODELS:
+        return MODELS[name]
+    
     models_dir = os.path.join(VEHCOM_DIR, "models")
     custom_objs = {"LastFrame": LastFrame}
     if SafeDense is not None:
         custom_objs["Dense"] = SafeDense
 
-    # 1. Base synthetic models
-    ncrt_path = os.path.join(models_dir, "ncrt_tdl_64.keras")
-    if os.path.exists(ncrt_path):
-        try:
-            MODELS["ncrt"] = tf.keras.models.load_model(ncrt_path, custom_objects=custom_objs, compile=False, safe_mode=False)
-            print("✓ NCRT (Base Synthetic) loaded.")
-        except Exception as e:
-            print(f"Warning loading NCRT model: {e}")
+    fname_map = {
+        "ncrt": "ncrt_tdl_64.keras",
+        "ncrn": "ncrn_tdl_64.keras",
+        "ncrt_matlab": "ncrt_tdl_64_matlab_5g_6g.keras",
+        "ncrn_matlab": "ncrn_tdl_64_matlab_5g_6g.keras",
+    }
+    fname = fname_map.get(name)
+    if fname:
+        p = os.path.join(models_dir, fname)
+        if os.path.exists(p):
+            try:
+                MODELS[name] = tf.keras.models.load_model(p, custom_objects=custom_objs, compile=False, safe_mode=False)
+                print(f"✓ Loaded {name} ({fname})")
+                return MODELS[name]
+            except Exception as e:
+                print(f"Warning loading {name}: {e}")
+    return None
 
-    ncrn_path = os.path.join(models_dir, "ncrn_tdl_64.keras")
-    if os.path.exists(ncrn_path):
-        try:
-            MODELS["ncrn"] = tf.keras.models.load_model(ncrn_path, custom_objects=custom_objs, compile=False, safe_mode=False)
-            print("✓ NCRN (Base Synthetic) loaded.")
-        except Exception as e:
-            print(f"Warning loading NCRN model: {e}")
+def model_infer(model, X_input):
+    """Direct model execution avoiding heavy Keras predict() dataset iteration & memory leak."""
+    try:
+        t_in = tf.convert_to_tensor(X_input, dtype=tf.float32)
+        out = model(t_in, training=False)
+        if hasattr(out, "numpy"):
+            return out.numpy()[0]
+        return np.array(out)[0]
+    except Exception as e:
+        print(f"Inference fallback: {e}")
+        return model.predict(X_input, verbose=0)[0]
 
-    # 2. MATLAB 5G + 6G fine-tuned models
-    ncrt_matlab_path = os.path.join(models_dir, "ncrt_tdl_64_matlab_5g_6g.keras")
-    if os.path.exists(ncrt_matlab_path):
-        try:
-            MODELS["ncrt_matlab"] = tf.keras.models.load_model(ncrt_matlab_path, custom_objects=custom_objs, compile=False, safe_mode=False)
-            print("✓ NCRT (MATLAB 5G+6G Sub-THz Trained) loaded.")
-        except Exception as e:
-            print(f"Warning loading NCRT MATLAB model: {e}")
-
-    ncrn_matlab_path = os.path.join(models_dir, "ncrn_tdl_64_matlab_5g_6g.keras")
-    if os.path.exists(ncrn_matlab_path):
-        try:
-            MODELS["ncrn_matlab"] = tf.keras.models.load_model(ncrn_matlab_path, custom_objects=custom_objs, compile=False, safe_mode=False)
-            print("✓ NCRN (MATLAB 5G+6G Trained) loaded.")
-        except Exception as e:
-            print(f"Warning loading NCRN MATLAB model: {e}")
+def load_models():
+    """Preload only lightweight core proposed models at startup (keeps memory under 200MB)."""
+    get_model("ncrt")
+    get_model("ncrt_matlab")
 
 def preload_matlab_datasets():
     """Cache MATLAB test datasets for fast UI interaction."""
@@ -238,9 +248,10 @@ def run_estimation(req: EstimationRequest):
 
     # NCRT
     h_ncrt_est = None
-    if "ncrt" in MODELS:
+    ncrt_model = get_model("ncrt")
+    if ncrt_model is not None:
         t0 = time.perf_counter()
-        raw_res = MODELS["ncrt"].predict(X, verbose=0)[0]
+        raw_res = model_infer(ncrt_model, X)
         ncrt_time = (time.perf_counter() - t0) * 1000.0
         h_ncrt_est = h_noisy_last + raw_res
         ncrt_nmse_lin = float(np.sum((h_true_last - h_ncrt_est) ** 2)) / h_true_norm_sq
@@ -253,16 +264,20 @@ def run_estimation(req: EstimationRequest):
 
     # NCRN
     h_ncrn_est = None
-    if "ncrn" in MODELS:
-        t0 = time.perf_counter()
-        raw_res_ncrn = MODELS["ncrn"].predict(X, verbose=0)[0]
-        ncrn_time = (time.perf_counter() - t0) * 1000.0
-        h_ncrn_est = h_noisy_last + raw_res_ncrn
-        ncrn_nmse_lin = float(np.sum((h_true_last - h_ncrn_est) ** 2)) / h_true_norm_sq
-        results["ncrn"] = {
-            "name": "NCRN (ConvLSTM)",
-            "nmse_db": round(10.0 * np.log10(max(ncrn_nmse_lin, 1e-12)), 2),
-            "latency_ms": round(ncrn_time, 2),
+    if req.selected_model == "ncrn":
+        ncrn_model = get_model("ncrn")
+        if ncrn_model is not None:
+            t0 = time.perf_counter()
+            raw_res_ncrn = model_infer(ncrn_model, X)
+            ncrn_time = (time.perf_counter() - t0) * 1000.0
+            h_ncrn_est = h_noisy_last + raw_res_ncrn
+            ncrn_nmse_lin = float(np.sum((h_true_last - h_ncrn_est) ** 2)) / h_true_norm_sq
+            results["ncrn"] = {
+                "name": "NCRN (ConvLSTM)",
+                "nmse_db": round(10.0 * np.log10(max(ncrn_nmse_lin, 1e-12)), 2),
+                "latency_ms": round(ncrn_time, 2),
+                "param_count": 1204610,
+            }
             "param_count": 1204610,
         }
 
@@ -278,6 +293,7 @@ def run_estimation(req: EstimationRequest):
     H_complex = h_true_last[:, :, 0] + 1j * h_true_last[:, :, 1]
     beamspace = np.abs(np.fft.fftshift(np.fft.fft2(H_complex)))[::step, ::step]
 
+    gc.collect()
     return {
         "status": "success",
         "scenario": req.scenario,
@@ -327,17 +343,20 @@ def run_snr_sweep(req: SweepRequest):
             sq_errs["mmse"] += float(np.sum((hr - mmse_estimate(hl, noise_var=noise_sigma**2, Nt=Nt, sp=sp)) ** 2))
 
             X = np.expand_dims(add_snr_channel(hn, snr), axis=0)
-            if "ncrt" in MODELS:
-                r_ncrt = MODELS["ncrt"].predict(X, verbose=0)[0]
+            ncrt_m = get_model("ncrt")
+            if ncrt_m is not None:
+                r_ncrt = model_infer(ncrt_m, X)
                 sq_errs["ncrt"] += float(np.sum((hr - (hl + r_ncrt)) ** 2))
-            if "ncrn" in MODELS:
-                r_ncrn = MODELS["ncrn"].predict(X, verbose=0)[0]
+            ncrn_m = MODELS.get("ncrn")
+            if ncrn_m is not None:
+                r_ncrn = model_infer(ncrn_m, X)
                 sq_errs["ncrn"] += float(np.sum((hr - (hl + r_ncrn)) ** 2))
 
         for m in methods:
             lin = sq_errs[m] / max(den, 1e-10)
             curves[m].append(round(10.0 * np.log10(max(lin, 1e-12)), 2))
 
+    gc.collect()
     return {
         "snr_range": snr_list,
         "scenario": req.scenario,
@@ -411,16 +430,18 @@ def run_matlab_6g_estimation(req: MatlabEstimateRequest):
 
     # 3. NCRT MATLAB 6G-Trained (Specialized Model)
     h_ncrt_6g_est = None
-    if "ncrt_matlab" in MODELS:
-        res_6g = MODELS["ncrt_matlab"].predict(X, verbose=0)[0]
+    ncrt_6g_model = get_model("ncrt_matlab")
+    if ncrt_6g_model is not None:
+        res_6g = model_infer(ncrt_6g_model, X)
         h_ncrt_6g_est = h_noisy_last + res_6g
         ncrt_6g_nmse = 10.0 * np.log10(max(float(np.sum((h_true_last - h_ncrt_6g_est) ** 2)) / h_true_norm_sq, 1e-12))
         results["ncrt_6g"] = {"name": "NCRT (6G Sub-THz Trained)", "nmse_db": round(ncrt_6g_nmse, 2)}
 
     # 4. NCRT Synthetic Base (Generalist Model)
     h_ncrt_base_est = None
-    if "ncrt" in MODELS:
-        res_base = MODELS["ncrt"].predict(X, verbose=0)[0]
+    ncrt_base_model = get_model("ncrt")
+    if ncrt_base_model is not None:
+        res_base = model_infer(ncrt_base_model, X)
         h_ncrt_base_est = h_noisy_last + res_base
         ncrt_base_nmse = 10.0 * np.log10(max(float(np.sum((h_true_last - h_ncrt_base_est) ** 2)) / h_true_norm_sq, 1e-12))
         results["ncrt_base"] = {"name": "NCRT (Synthetic Base)", "nmse_db": round(ncrt_base_nmse, 2)}
@@ -438,6 +459,7 @@ def run_matlab_6g_estimation(req: MatlabEstimateRequest):
     H_complex = h_true_last[:, :, 0] + 1j * h_true_last[:, :, 1]
     beamspace = np.abs(np.fft.fftshift(np.fft.fft2(H_complex)))[::step, ::step]
 
+    gc.collect()
     return {
         "status": "success",
         "dataset_id": req.dataset_id,

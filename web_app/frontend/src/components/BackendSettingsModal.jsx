@@ -126,7 +126,7 @@ export default function BackendSettingsModal({ isOpen, onClose, onConnected }) {
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder="https://your-service-name.onrender.com"
-                className="w-full bg-[#E5E8CE] border border-[#CCD3B5] rounded-xl px-3.5 py-2.5 font-mono text-xs text-[#263629] placeholder-[#8C9E89] focus:outline-none focus:ring-2 focus:ring-[#789575] focus:border-transparent"
+                className="w-full bg-[#E5E8CE] border border-[#CCD3B5] rounded-xl pl-3.5 pr-24 py-2.5 font-mono text-xs text-[#263629] placeholder-[#8C9E89] focus:outline-none focus:ring-2 focus:ring-[#789575] focus:border-transparent"
               />
               <button
                 type="button"
