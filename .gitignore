@@ -17,3 +17,9 @@ node_modules/
 dist/
 web_app/frontend/node_modules/
 web_app/frontend/dist/
+
+# Local Environment Files (exclude actual .env, keep .env.example)
+.env
+.env.local
+web_app/backend/.env
+web_app/frontend/.env

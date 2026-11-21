@@ -13,6 +13,16 @@ BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
 WEB_APP_DIR = os.path.abspath(os.path.join(BACKEND_DIR, ".."))
 VEHCOM_DIR = os.path.abspath(os.path.join(WEB_APP_DIR, ".."))
 
+# Load local .env if present (standard library, zero dependency)
+env_path = os.path.join(BACKEND_DIR, ".env")
+if os.path.exists(env_path):
+    with open(env_path) as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                k, v = line.split("=", 1)
+                os.environ.setdefault(k.strip(), v.strip())
+
 sys.path.insert(0, VEHCOM_DIR)
 sys.path.insert(0, os.path.join(VEHCOM_DIR, "stage2_tdl", "ncrt"))
 sys.path.insert(0, os.path.join(VEHCOM_DIR, "stage2_tdl", "ncrn"))
