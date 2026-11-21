@@ -63,6 +63,35 @@ export default function App() {
   const [glass, setGlass] = useState(defaultGlass);
   const [glassSettingsOpen, setGlassSettingsOpen] = useState(false);
 
+  // Communication Model Backgrounds
+  const communicationBackgrounds = [
+    {
+      id: 'global-mesh',
+      name: 'Satellite NTN Mesh',
+      url: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2560&q=80',
+      description: 'Global 6G Non-Terrestrial Network (NTN) & orbital communication nodes'
+    },
+    {
+      id: 'antenna-array',
+      name: 'Massive MIMO Array',
+      url: 'https://images.unsplash.com/photo-1662614380507-72f8d36f1d2b?auto=format&fit=crop&w=2560&q=80',
+      description: 'Phased antenna array testbed for spatial beamforming & wavefront reception'
+    },
+    {
+      id: 'network-nodes',
+      name: 'Digital Network Graph',
+      url: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=2560&q=80',
+      description: 'Virtual channel topology & graph communication nodes'
+    },
+    {
+      id: 'abstract-wave',
+      name: 'Electromagnetic Wave',
+      url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1920&q=80',
+      description: 'Abstract continuous radio frequency waveform and physical refraction'
+    }
+  ];
+  const [activeBg, setActiveBg] = useState(communicationBackgrounds[0].url);
+
   const updateGlass = (patch) => {
     setGlass((prev) => ({ ...prev, ...patch }));
   };
@@ -216,11 +245,11 @@ export default function App() {
         "--gw-edge": glass.edge,
       }}
     >
-      {/* Ambient Room Image & Gradient Shade for Real Optical Glass Refraction */}
+      {/* Ambient Communication Model Image & Gradient Shade for Real Optical Glass Refraction */}
       <img
         className="gw-room"
-        src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1920&q=80"
-        alt=""
+        src={activeBg}
+        alt="Communication Model"
       />
       <div className="gw-room-shade" aria-hidden="true" />
 
@@ -764,9 +793,36 @@ export default function App() {
             </div>
           </div>
 
+          {/* Communication Model Background Options */}
+          <div className="mt-4 pt-3 border-t border-[#1E293B]">
+            <span className="text-[11px] font-medium text-[#94A3B8] block mb-1.5">
+              Communication model background
+            </span>
+            <div className="grid grid-cols-2 gap-1.5">
+              {communicationBackgrounds.map((bg) => (
+                <button
+                  key={bg.id}
+                  type="button"
+                  onClick={() => setActiveBg(bg.url)}
+                  className={`px-2 py-1.5 rounded-md text-[11px] font-medium border transition cursor-pointer text-left truncate ${
+                    activeBg === bg.url
+                      ? 'border-[#D4FF00] bg-[#2563EB]/25 text-[#D4FF00]'
+                      : 'border-[#1E293B] bg-[#060911] text-[#94A3B8] hover:text-[#F8FAFC] hover:bg-[#1E293B]'
+                  }`}
+                  title={bg.description}
+                >
+                  {bg.name}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <button
             type="button"
-            onClick={() => updateGlass(defaultGlass)}
+            onClick={() => {
+              updateGlass(defaultGlass);
+              setActiveBg(communicationBackgrounds[0].url);
+            }}
             className="mt-4 w-full py-1.5 rounded-md text-xs font-medium border border-[#1E293B] bg-[#060911] hover:bg-[#1E293B] text-[#94A3B8] hover:text-[#F8FAFC] transition cursor-pointer text-center"
           >
             Reset to defaults
