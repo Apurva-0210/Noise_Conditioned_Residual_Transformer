@@ -594,18 +594,6 @@ export default function App() {
         selectedScenario={selectedScenario}
       />
 
-      {/* Floating Action Pill on Right Edge for Quick Tools Access */}
-      {!sidebarOpen && (
-        <button
-          onClick={() => setSidebarOpen(true)}
-          className="fixed bottom-6 right-6 z-30 flex items-center gap-2 bg-[#789575] hover:bg-[#668263] text-[#F2F3E2] px-3.5 py-2 rounded-lg shadow-md border border-[#789575] font-medium text-xs cursor-pointer transition"
-          title="Open chart tools and scientific exports"
-        >
-          <Camera size={14} />
-          <span>Tools & exports</span>
-        </button>
-      )}
-
       {/* Modern Scientific Footer */}
       <footer className="border-t border-[#CCD3B5] bg-[#EEF0DC] mt-auto text-xs text-[#647B62]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
