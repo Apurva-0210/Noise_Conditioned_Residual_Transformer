@@ -14,7 +14,6 @@ export default function Controls({
   loadingEstimate,
   loadingSweep,
   backendOnline,
-  onOpenBackendSettings,
 }) {
   // Compute Doppler frequency: fd = v * fc / c at 3.5 GHz
   const fc = 3.5e9;
@@ -39,21 +38,16 @@ export default function Controls({
           </div>
         </div>
 
-        <button
-          type="button"
-          onClick={onOpenBackendSettings}
-          className="flex items-center gap-2 text-xs px-2.5 py-1 rounded-md hover:bg-[#EEF0DC] border border-transparent hover:border-[#CCD3B5] transition cursor-pointer"
-          title="Click to view or edit backend connection URL"
-        >
+        <div className="flex items-center gap-2 text-xs">
           <span
             className={`w-2 h-2 rounded-full ${
               backendOnline ? 'bg-[#789575] animate-pulse' : 'bg-rose-500'
             }`}
           />
-          <span className="text-[11px] font-mono text-[#647B62] font-semibold underline decoration-dotted">
-            {backendOnline ? 'FastAPI Connected' : 'Offline (Click to Connect)'}
+          <span className="text-[11px] font-mono text-[#647B62] font-semibold">
+            {backendOnline ? 'FastAPI Connected' : 'Connecting...'}
           </span>
-        </button>
+        </div>
       </div>
 
       {/* 4-Column Horizontal Parameter Grid */}

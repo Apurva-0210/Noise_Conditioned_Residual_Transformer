@@ -1,63 +1,21 @@
-export function sanitizeBackendUrl(raw) {
-  if (!raw || typeof raw !== "string") return "";
-  let url = raw.trim().replace(/\/+$/, "");
-  // Strip accidental trailing /api/health or /api
-  url = url.replace(/\/api\/health$/i, "");
-  url = url.replace(/\/api$/i, "");
-  return url.replace(/\/+$/, "");
-}
+// Official Production Backend endpoint
+const OFFICIAL_PRODUCTION_API = "https://noise-conditioned-residual-transformer.onrender.com";
 
 export function getBackendUrl() {
-  if (typeof window !== "undefined") {
-    const custom = localStorage.getItem("massive_mimo_api_url");
-    if (custom && custom.trim()) {
-      return sanitizeBackendUrl(custom);
-    }
-  }
   const envUrl = import.meta.env.VITE_API_BASE;
   if (envUrl && envUrl.trim()) {
-    return sanitizeBackendUrl(envUrl);
+    return envUrl.trim().replace(/\/+$/, "");
   }
+  // If running in production (deployed on Vercel or any live host), strictly use official Render backend
+  if (typeof window !== "undefined" && window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
+    return OFFICIAL_PRODUCTION_API;
+  }
+  // Local development fallback
   return "http://localhost:8000";
-}
-
-export function setBackendUrl(url) {
-  if (typeof window !== "undefined") {
-    if (url && url.trim()) {
-      localStorage.setItem("massive_mimo_api_url", sanitizeBackendUrl(url));
-    } else {
-      localStorage.removeItem("massive_mimo_api_url");
-    }
-  }
-}
-
-export function resetBackendUrl() {
-  if (typeof window !== "undefined") {
-    localStorage.removeItem("massive_mimo_api_url");
-  }
 }
 
 export function getApiBase() {
   return `${getBackendUrl()}/api`;
-}
-
-export async function testConnection(customUrl) {
-  const base = (customUrl ? customUrl.trim().replace(/\/+$/, "") : getBackendUrl());
-  const urlToTest = `${base}/api/health`;
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 25000); // 25s timeout for Render wake-up
-  try {
-    const res = await fetch(urlToTest, { signal: controller.signal });
-    clearTimeout(timeoutId);
-    if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
-    return await res.json();
-  } catch (err) {
-    clearTimeout(timeoutId);
-    if (err.name === "AbortError") {
-      throw new Error("Connection timed out (25s). If on Render free tier, the container may be spinning up. Please wait 15 seconds and retry.");
-    }
-    throw err;
-  }
 }
 
 export async function checkHealth() {

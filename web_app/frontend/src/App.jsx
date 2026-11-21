@@ -18,18 +18,16 @@ import {
   Download
 } from 'lucide-react';
 
-import { checkHealth, fetchScenarios, runEstimation, runSweep, getApiBase, getBackendUrl } from './api';
+import { checkHealth, fetchScenarios, runEstimation, runSweep, getApiBase } from './api';
 import MetricCard from './components/MetricCard';
 import Controls from './components/Controls';
 import ChannelHeatmap from './components/ChannelHeatmap';
 import PerformanceCurve from './components/PerformanceCurve';
 import MatlabStudio from './components/MatlabStudio';
 import RightSidebar from './components/RightSidebar';
-import BackendSettingsModal from './components/BackendSettingsModal';
 
 export default function App() {
   const [backendOnline, setBackendOnline] = useState(false);
-  const [settingsModalOpen, setSettingsModalOpen] = useState(false);
   const [scenarios, setScenarios] = useState([
     { id: 'TDL-A', name: '3GPP TDL-A', type: 'NLOS', delay_spread: 'High (300 ns)' },
     { id: 'TDL-B', name: '3GPP TDL-B', type: 'NLOS', delay_spread: 'Medium (100 ns)' },
@@ -218,19 +216,14 @@ export default function App() {
 
           {/* Quick Status & Chart Tools Button */}
           <div className="flex items-center gap-3 text-xs">
-            <button
-              type="button"
-              onClick={() => setSettingsModalOpen(true)}
-              className="flex items-center gap-2 bg-[#E5E8CE] hover:bg-[#DDE1C1] px-3 py-1.5 rounded-lg border border-[#CCD3B5] shadow-inner transition cursor-pointer group"
-              title="Click to view or change backend connection URL"
-            >
-              <Server size={14} className="text-[#647B62] group-hover:text-[#263629]" />
+            <div className="hidden md:flex items-center gap-2 bg-[#E5E8CE] px-3 py-1.5 rounded-lg border border-[#CCD3B5] shadow-inner">
+              <Server size={14} className="text-[#647B62]" />
               <span className="text-[#647B62] font-medium hidden sm:inline">FastAPI:</span>
               <span className={`font-mono font-bold flex items-center gap-1.5 ${backendOnline ? 'text-[#263629]' : 'text-rose-600'}`}>
                 <span className={`w-1.5 h-1.5 rounded-full ${backendOnline ? 'bg-emerald-600' : 'bg-rose-500 animate-pulse'}`} />
-                {backendOnline ? 'Online' : 'Offline (Click to Connect)'}
+                {backendOnline ? 'Active (Cloud)' : 'Connecting...'}
               </span>
-            </button>
+            </div>
 
             <div className="hidden sm:flex items-center gap-1.5 bg-[#789575]/15 text-[#263629] px-3 py-1.5 rounded-lg border border-[#789575]/40 font-bold font-mono">
               <Sparkles size={14} className="text-[#789575]" />
@@ -412,7 +405,6 @@ export default function App() {
               loadingEstimate={loadingEstimate}
               loadingSweep={loadingSweep}
               backendOnline={backendOnline}
-              onOpenBackendSettings={() => setSettingsModalOpen(true)}
             />
 
             {/* 2. Controls bar above heatmaps */}
@@ -732,39 +724,18 @@ export default function App() {
               © 2026 Massive MIMO AI Channel Studio • Published in <em>Vehicular Communications</em> (Elsevier).
             </p>
             <div className="flex items-center gap-3 font-mono text-[10px]">
-              <button
-                type="button"
-                onClick={() => setSettingsModalOpen(true)}
-                className="flex items-center gap-1.5 font-bold hover:underline cursor-pointer"
-              >
+              <div className="flex items-center gap-1.5 font-bold">
                 <span className={`w-2 h-2 rounded-full ${backendOnline ? 'bg-emerald-600 animate-pulse' : 'bg-rose-500'}`} />
                 <span className={backendOnline ? 'text-emerald-800' : 'text-rose-600'}>
-                  {backendOnline ? 'FastAPI Cloud Online' : 'FastAPI Offline (Click to configure)'}
+                  {backendOnline ? 'FastAPI Cloud Active' : 'Connecting to Cloud Backend...'}
                 </span>
-              </button>
+              </div>
               <span>•</span>
               <span className="text-[#263629] font-bold">64×64 Massive Array</span>
             </div>
           </div>
         </div>
       </footer>
-
-      {/* Backend Connection Modal */}
-      <BackendSettingsModal
-        isOpen={settingsModalOpen}
-        onClose={() => setSettingsModalOpen(false)}
-        onConnected={async () => {
-          try {
-            const h = await checkHealth();
-            setBackendOnline(h.status === 'online');
-            const sc = await fetchScenarios();
-            setScenarios(sc);
-            handleRunEstimate();
-          } catch (e) {
-            console.error(e);
-          }
-        }}
-      />
     </div>
   );
 }
