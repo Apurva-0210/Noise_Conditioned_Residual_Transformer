@@ -1,13 +1,22 @@
+export function sanitizeBackendUrl(raw) {
+  if (!raw || typeof raw !== "string") return "";
+  let url = raw.trim().replace(/\/+$/, "");
+  // Strip accidental trailing /api/health or /api
+  url = url.replace(/\/api\/health$/i, "");
+  url = url.replace(/\/api$/i, "");
+  return url.replace(/\/+$/, "");
+}
+
 export function getBackendUrl() {
   if (typeof window !== "undefined") {
     const custom = localStorage.getItem("massive_mimo_api_url");
     if (custom && custom.trim()) {
-      return custom.trim().replace(/\/+$/, "");
+      return sanitizeBackendUrl(custom);
     }
   }
   const envUrl = import.meta.env.VITE_API_BASE;
   if (envUrl && envUrl.trim()) {
-    return envUrl.trim().replace(/\/+$/, "");
+    return sanitizeBackendUrl(envUrl);
   }
   return "http://localhost:8000";
 }
@@ -15,7 +24,7 @@ export function getBackendUrl() {
 export function setBackendUrl(url) {
   if (typeof window !== "undefined") {
     if (url && url.trim()) {
-      localStorage.setItem("massive_mimo_api_url", url.trim().replace(/\/+$/, ""));
+      localStorage.setItem("massive_mimo_api_url", sanitizeBackendUrl(url));
     } else {
       localStorage.removeItem("massive_mimo_api_url");
     }
