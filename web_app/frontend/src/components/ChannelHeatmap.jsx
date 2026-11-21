@@ -22,9 +22,9 @@ export default function ChannelHeatmap({
 
   if (!zData || zData.length === 0) {
     return (
-      <div className="bg-[#F2F3E2] border border-[#CCD3B5] rounded-xl p-5 flex flex-col items-center justify-center min-h-[280px] shadow-subtle">
-        <div className="w-7 h-7 rounded-full border-2 border-[#CCD3B5] border-t-[#789575] animate-spin mb-2" />
-        <p className="text-[#647B62] text-xs font-medium">Computing channel response matrix...</p>
+      <div className="gw-panel border border-[#1E293B] rounded-xl p-5 flex flex-col items-center justify-center min-h-[280px]">
+        <div className="w-7 h-7 rounded-full border-2 border-[#1E293B] border-t-[#2563EB] animate-spin mb-2" />
+        <p className="text-[#94A3B8] text-xs font-medium">Computing channel response matrix...</p>
       </div>
     );
   }
@@ -58,8 +58,8 @@ export default function ChannelHeatmap({
     colorbar: {
       thickness: 8,
       len: 0.9,
-      tickfont: { color: '#647B62', size: 8 },
-      tickcolor: '#CCD3B5',
+      tickfont: { color: '#94A3B8', size: 8 },
+      tickcolor: '#334155',
       outlinecolor: 'transparent',
     },
     hoverongaps: false,
@@ -88,28 +88,30 @@ export default function ChannelHeatmap({
   return (
     <div className={`gw-panel rounded-lg p-3.5 flex flex-col justify-between border transition-all duration-200 ${
       highlight 
-        ? 'border-[#789575] ring-1 ring-[#789575]/30' 
-        : 'border-[#CCD3B5]/70 hover:border-[#CCD3B5]'
+        ? 'border-[#D4FF00]/60 ring-1 ring-[#D4FF00]/40 shadow-lg shadow-[#D4FF00]/5' 
+        : 'border-[#1E293B]/80 hover:border-[#2563EB]/50'
     }`}>
       {/* Header */}
       <div className="flex items-start justify-between gap-1.5 mb-2">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-1.5 flex-wrap">
-            <h3 className="text-xs font-semibold text-[#263629]">
+            <h3 className="text-xs font-semibold text-[#F8FAFC]">
               {title}
             </h3>
             {badgeText && (
               <span className={`text-[10px] px-1.5 py-0.2 rounded font-mono font-medium border shrink-0 ${
                 isErrorMatrix 
-                  ? 'bg-[#F9E6E6] text-[#9C4141] border-[#9C4141]/30'
-                  : 'bg-[#789575] text-[#F2F3E2] border-[#789575]'
+                  ? 'bg-rose-500/15 text-rose-400 border-rose-500/30'
+                  : highlight
+                    ? 'bg-[#D4FF00] text-[#060911] font-semibold border border-[#D4FF00]'
+                    : 'bg-[#2563EB] text-white border border-[#3B82F6]'
               }`}>
                 {badgeText}
               </span>
             )}
           </div>
           {subtitle && (
-            <p className="text-[10px] text-[#647B62] mt-0.5 leading-snug">
+            <p className="text-[10px] text-[#94A3B8] mt-0.5 leading-snug">
               {subtitle}
             </p>
           )}
@@ -119,31 +121,31 @@ export default function ChannelHeatmap({
         <div className="flex items-center gap-1 shrink-0 ml-1">
           <button
             onClick={handleDownloadPng}
-            className="p-1 rounded bg-[#EEF0DC] hover:bg-[#E5E8CE] border border-[#CCD3B5] text-[#647B62] hover:text-[#263629] transition cursor-pointer"
+            className="p-1 rounded bg-[#0B1120] hover:bg-[#1E293B] border border-[#1E293B] text-[#94A3B8] hover:text-[#F8FAFC] transition cursor-pointer"
             title="Download this heatmap as PNG"
           >
             <Camera size={11} />
           </button>
 
-          <div className="flex items-center bg-[#EEF0DC] border border-[#CCD3B5] rounded px-1.5 py-0.5 text-[9px]">
-            <Palette size={10} className="text-[#647B62] mr-1" />
+          <div className="flex items-center bg-[#0B1120] border border-[#1E293B] rounded px-1.5 py-0.5 text-[9px]">
+            <Palette size={10} className="text-[#60A5FA] mr-1" />
             <select
               value={colorscale}
               onChange={(e) => setColorscale(e.target.value)}
-              className="bg-transparent text-[#263629] font-medium focus:outline-none cursor-pointer text-[9px]"
+              className="bg-transparent text-[#F8FAFC] font-medium focus:outline-none cursor-pointer text-[9px]"
               title="Select colormap"
             >
-              <option value="Viridis">Viridis</option>
-              <option value="Plasma">Plasma</option>
-              <option value="Turbo">Turbo</option>
-              <option value="YlGnBu">YlGnBu</option>
-              <option value="Greens">Greens</option>
-              <option value="Hot">Hot</option>
+              <option value="Viridis" className="bg-[#0B1120] text-[#F8FAFC]">Viridis</option>
+              <option value="Plasma" className="bg-[#0B1120] text-[#F8FAFC]">Plasma</option>
+              <option value="Turbo" className="bg-[#0B1120] text-[#F8FAFC]">Turbo</option>
+              <option value="YlGnBu" className="bg-[#0B1120] text-[#F8FAFC]">YlGnBu</option>
+              <option value="Greens" className="bg-[#0B1120] text-[#F8FAFC]">Greens</option>
+              <option value="Hot" className="bg-[#0B1120] text-[#F8FAFC]">Hot</option>
             </select>
           </div>
 
           <span 
-            className="text-[9px] px-1.5 py-0.5 rounded bg-[#EEF0DC] text-[#263629] font-mono border border-[#CCD3B5]"
+            className="text-[9px] px-1.5 py-0.5 rounded bg-[#0B1120] text-[#60A5FA] font-mono border border-[#1E293B]"
             title={`Sampled grid: ${dim}×${dim} (Full physical array: 64×64)`}
           >
             {dim}×{dim}
@@ -154,7 +156,7 @@ export default function ChannelHeatmap({
       {/* Heatmap Plot */}
       <div 
         ref={plotContainerRef}
-        className="w-full h-[210px] flex items-center justify-center overflow-hidden bg-[#F5F5E9] rounded-lg border border-[#CCD3B5]/60"
+        className="w-full h-[210px] flex items-center justify-center overflow-hidden bg-[#060911] rounded-lg border border-[#1E293B]/70"
       >
         <Plot
           data={[trace]}
@@ -165,13 +167,13 @@ export default function ChannelHeatmap({
             paper_bgcolor: 'transparent',
             plot_bgcolor: 'transparent',
             xaxis: {
-              title: { text: 'Tx Antenna', font: { color: '#647B62', size: 9 } },
-              tickfont: { color: '#647B62', size: 8 },
+              title: { text: 'Tx Antenna', font: { color: '#94A3B8', size: 9 } },
+              tickfont: { color: '#64748B', size: 8 },
               showgrid: false,
             },
             yaxis: {
-              title: { text: 'Rx Antenna', font: { color: '#647B62', size: 9 } },
-              tickfont: { color: '#647B62', size: 8 },
+              title: { text: 'Rx Antenna', font: { color: '#94A3B8', size: 9 } },
+              tickfont: { color: '#64748B', size: 8 },
               showgrid: false,
             },
           }}
@@ -182,10 +184,10 @@ export default function ChannelHeatmap({
       </div>
 
       {/* Telemetry Footer */}
-      <div className="mt-2 pt-1.5 border-t border-[#CCD3B5]/60 flex items-center justify-between text-[10px] text-[#647B62] font-mono tabular-nums">
-        <span>Min: <strong className="text-[#263629]">{minVal}</strong></span>
-        <span>Avg: <strong className="text-[#263629]">{meanVal}</strong></span>
-        <span>Peak: <strong className="text-[#263629]">{maxVal}</strong></span>
+      <div className="mt-2 pt-1.5 border-t border-[#1E293B]/60 flex items-center justify-between text-[10px] text-[#64748B] font-mono tabular-nums">
+        <span>Min: <strong className="text-[#F8FAFC]">{minVal}</strong></span>
+        <span>Avg: <strong className="text-[#F8FAFC]">{meanVal}</strong></span>
+        <span>Peak: <strong className={highlight ? "text-[#D4FF00]" : "text-[#F8FAFC]"}>{maxVal}</strong></span>
       </div>
     </div>
   );

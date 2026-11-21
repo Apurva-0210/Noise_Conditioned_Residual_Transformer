@@ -52,13 +52,13 @@ export default function App() {
   const [sweepData, setSweepData] = useState(null);
   const [matlabMetrics, setMatlabMetrics] = useState(null);
 
-  // Live Glass Material Appearance
+  // Live Glass Material Appearance — Midnight, Cobalt & Acid Lime
   const defaultGlass = {
-    blur: 22,
-    opacity: 0.32,
-    saturation: 1.25,
-    tint: '#eadbc7',
-    edge: 0.65,
+    blur: 24,
+    opacity: 0.38,
+    saturation: 1.30,
+    tint: '#1d4ed8',
+    edge: 0.70,
   };
   const [glass, setGlass] = useState(defaultGlass);
   const [glassSettingsOpen, setGlassSettingsOpen] = useState(false);
@@ -207,7 +207,7 @@ export default function App() {
 
   return (
     <div 
-      className="gw-root min-h-screen text-[#263629] flex flex-col antialiased selection:bg-[#789575] selection:text-[#F2F3E2]"
+      className="gw-root min-h-screen text-[#F8FAFC] flex flex-col antialiased selection:bg-[#2563EB] selection:text-white"
       style={{
         "--gw-blur": `${glass.blur}px`,
         "--gw-opacity": glass.opacity,
@@ -225,23 +225,23 @@ export default function App() {
       <div className="gw-room-shade" aria-hidden="true" />
 
       {/* Top Header with Glass Material */}
-      <header className="border-b border-[#CCD3B5]/60 gw-glass sticky top-0 z-40">
+      <header className="border-b border-[#1E293B]/70 gw-glass sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           {/* Logo & Paper Title */}
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-[#789575] flex items-center justify-center text-[#F2F3E2] shadow-xs">
+            <div className="w-9 h-9 rounded-lg bg-[#2563EB] flex items-center justify-center text-white shadow-sm">
               <Radio size={20} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-sm sm:text-base font-semibold text-[#263629] tracking-tight">
+                <h1 className="text-sm sm:text-base font-semibold text-[#F8FAFC] tracking-tight">
                   Massive MIMO Channel Estimation Testbed
                 </h1>
-                <span className="px-1.5 py-0.5 rounded text-[11px] font-mono font-medium bg-[#E5E8CE]/80 text-[#647B62] border border-[#CCD3B5]">
+                <span className="px-1.5 py-0.5 rounded text-[11px] font-mono font-medium bg-[#0B1120] text-[#60A5FA] border border-[#1E293B]">
                   VehCom 2026
                 </span>
               </div>
-              <p className="text-xs text-[#647B62] font-normal">
+              <p className="text-xs text-[#94A3B8] font-normal">
                 Attention-based residual learning for 3GPP and 6G Sub-THz channels
               </p>
             </div>
@@ -249,16 +249,16 @@ export default function App() {
 
           {/* Quick Status, Glass Controls & Chart Tools Button */}
           <div className="flex items-center gap-2.5 text-xs">
-            <div className="hidden md:flex items-center gap-2 bg-[#E5E8CE]/80 px-2.5 py-1 rounded-md border border-[#CCD3B5]/80">
-              <Server size={13} className="text-[#647B62]" />
-              <span className="text-[#647B62] text-[11px]">Backend:</span>
-              <span className={`font-mono text-[11px] font-medium flex items-center gap-1.5 ${backendOnline ? 'text-[#263629]' : 'text-[#8A4A4A]'}`}>
-                <span className={`w-1.5 h-1.5 rounded-full ${backendOnline ? 'bg-emerald-600' : 'bg-rose-500'}`} />
+            <div className="hidden md:flex items-center gap-2 bg-[#0B1120] px-2.5 py-1 rounded-md border border-[#1E293B]">
+              <Server size={13} className="text-[#60A5FA]" />
+              <span className="text-[#94A3B8] text-[11px]">Backend:</span>
+              <span className={`font-mono text-[11px] font-medium flex items-center gap-1.5 ${backendOnline ? 'text-[#D4FF00]' : 'text-rose-400'}`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${backendOnline ? 'bg-[#D4FF00] shadow-sm shadow-[#D4FF00]/60' : 'bg-rose-500'}`} />
                 {backendOnline ? 'Connected' : 'Connecting...'}
               </span>
             </div>
 
-            <div className="hidden sm:inline-flex items-center gap-1 bg-[#E5E8CE]/80 text-[#263629] px-2.5 py-1 rounded-md border border-[#CCD3B5]/80 font-mono text-xs">
+            <div className="hidden sm:inline-flex items-center gap-1 bg-[#0B1120] text-[#60A5FA] px-2.5 py-1 rounded-md border border-[#1E293B] font-mono text-xs">
               <span>64×64 UPA</span>
             </div>
 
@@ -266,17 +266,17 @@ export default function App() {
             <button
               type="button"
               onClick={() => setGlassSettingsOpen(!glassSettingsOpen)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition cursor-pointer border bg-[#EEF0DC]/80 hover:bg-[#E5E8CE] text-[#263629] border-[#CCD3B5] shadow-xs"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition cursor-pointer border bg-[#0B1120] hover:bg-[#1E293B] text-[#F8FAFC] border-[#1E293B] shadow-xs"
               title="Adjust dashboard glass appearance"
             >
-              <Settings2 size={14} />
+              <Settings2 size={14} className="text-[#2563EB]" />
               <span>Adjust glass</span>
             </button>
 
             {/* Chart Tools & Exports Drawer Toggle */}
             <button
               onClick={() => setSidebarOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition cursor-pointer border bg-[#789575] hover:bg-[#668263] text-[#F2F3E2] border-[#789575] shadow-xs"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition cursor-pointer border bg-[#2563EB] hover:bg-[#1D4ED8] text-white border-[#3B82F6] shadow-sm shadow-blue-500/20"
               title="Open chart tools and scientific exports"
             >
               <Camera size={14} />
@@ -372,14 +372,14 @@ export default function App() {
         )}
 
         {/* Clean Segmented Navigation Tab Control with Glass styling */}
-        <div className="flex items-center justify-between border-b border-[#CCD3B5]/50 pb-2">
-          <div className="inline-flex gw-panel p-1 rounded-lg border border-[#CCD3B5]/60 text-xs font-medium gap-1 shadow-xs">
+        <div className="flex items-center justify-between border-b border-[#1E293B]/70 pb-2">
+          <div className="inline-flex gw-panel p-1 rounded-lg border border-[#1E293B] text-xs font-medium gap-1 shadow-xs">
             <button
               onClick={() => setActiveTab('heatmaps')}
               className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition cursor-pointer ${
                 activeTab === 'heatmaps'
-                  ? 'bg-[#789575] text-[#F2F3E2] shadow-xs'
-                  : 'text-[#647B62] hover:text-[#263629]'
+                  ? 'bg-[#2563EB] text-white shadow-xs'
+                  : 'text-[#94A3B8] hover:text-[#F8FAFC]'
               }`}
             >
               <Layers size={14} />
@@ -390,8 +390,8 @@ export default function App() {
               onClick={() => setActiveTab('sweep')}
               className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition cursor-pointer ${
                 activeTab === 'sweep'
-                  ? 'bg-[#789575] text-[#F2F3E2] shadow-xs'
-                  : 'text-[#647B62] hover:text-[#263629]'
+                  ? 'bg-[#2563EB] text-white shadow-xs'
+                  : 'text-[#94A3B8] hover:text-[#F8FAFC]'
               }`}
             >
               <BarChart3 size={14} />
@@ -402,8 +402,8 @@ export default function App() {
               onClick={() => setActiveTab('matlab_6g')}
               className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition cursor-pointer ${
                 activeTab === 'matlab_6g'
-                  ? 'bg-[#789575] text-[#F2F3E2] shadow-xs'
-                  : 'text-[#647B62] hover:text-[#263629]'
+                  ? 'bg-[#2563EB] text-white shadow-xs'
+                  : 'text-[#94A3B8] hover:text-[#F8FAFC]'
               }`}
             >
               <Play size={14} />
@@ -413,20 +413,20 @@ export default function App() {
 
           <div className="flex items-center gap-3">
             {/* Quick Chart Tools Mode indicator */}
-            <div className="hidden sm:flex items-center gap-1.5 text-xs font-mono text-[#647B62] bg-[#EEF0DC]/80 backdrop-blur-md border border-[#CCD3B5]/80 px-2.5 py-1 rounded-md">
+            <div className="hidden sm:flex items-center gap-1.5 text-xs font-mono text-[#94A3B8] bg-[#0B1120] backdrop-blur-md border border-[#1E293B] px-2.5 py-1 rounded-md">
               <span>Mode:</span>
-              <strong className="text-[#263629] capitalize">{chartDragMode}</strong>
+              <strong className="text-[#D4FF00] capitalize">{chartDragMode}</strong>
               <button
                 onClick={() => setChartDragMode(chartDragMode === 'zoom' ? 'pan' : 'zoom')}
-                className="ml-1 text-[#789575] hover:text-[#263629] underline cursor-pointer"
+                className="ml-1 text-[#60A5FA] hover:text-[#F8FAFC] underline cursor-pointer"
                 title="Toggle Pan/Zoom mode"
               >
                 (Switch)
               </button>
             </div>
 
-            <span className="text-xs font-mono text-[#647B62] hidden md:inline">
-              Array: <strong className="text-[#263629]">64×64 Massive MIMO</strong>
+            <span className="text-xs font-mono text-[#94A3B8] hidden md:inline">
+              Array: <strong className="text-[#60A5FA]">64×64 Massive MIMO</strong>
             </span>
           </div>
         </div>
@@ -451,29 +451,29 @@ export default function App() {
             />
 
             {/* 2. Controls bar above heatmaps */}
-            <div className="gw-panel flex flex-wrap items-center justify-between gap-3 border border-[#CCD3B5]/70 rounded-lg px-4 py-2.5">
+            <div className="gw-panel flex flex-wrap items-center justify-between gap-3 border border-[#1E293B]/80 rounded-lg px-4 py-2.5">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs font-semibold text-[#263629]">
+                <span className="text-xs font-semibold text-[#F8FAFC]">
                   3GPP {selectedScenario} spatial channel grid
                 </span>
-                <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#EEF0DC] text-[#263629] border border-[#CCD3B5]">
+                <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#0B1120] text-[#D4FF00] border border-[#1E293B]">
                   SNR: {snr} dB
                 </span>
-                <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#EEF0DC] text-[#263629] border border-[#CCD3B5]">
+                <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#0B1120] text-[#60A5FA] border border-[#1E293B]">
                   Mobility: {speed} km/h
                 </span>
-                <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#EEF0DC] text-[#263629] border border-[#CCD3B5]">
+                <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#0B1120] text-[#94A3B8] border border-[#1E293B]">
                   Grid: 64×64 UPA
                 </span>
               </div>
 
               <div className="flex items-center gap-3">
-                <label className="flex items-center gap-1.5 text-xs text-[#647B62] font-normal cursor-pointer">
+                <label className="flex items-center gap-1.5 text-xs text-[#94A3B8] font-normal cursor-pointer">
                   <input
                     type="checkbox"
                     checked={sharedColorScaleTDL}
                     onChange={(e) => setSharedColorScaleTDL(e.target.checked)}
-                    className="accent-[#789575] rounded"
+                    className="accent-[#2563EB] rounded"
                   />
                   <span>Shared Z-scale</span>
                 </label>
@@ -481,14 +481,14 @@ export default function App() {
                 <button
                   onClick={handleRunEstimate}
                   disabled={loadingEstimate}
-                  className="flex items-center gap-1.5 bg-[#789575] hover:bg-[#668263] disabled:opacity-50 text-[#F2F3E2] font-medium py-1 px-3 rounded-md shadow-xs transition text-xs cursor-pointer border border-[#789575]"
+                  className="flex items-center gap-1.5 bg-[#2563EB] hover:bg-[#1D4ED8] disabled:opacity-50 text-white font-medium py-1 px-3 rounded-md shadow-sm transition text-xs cursor-pointer border border-[#3B82F6]"
                 >
                   {loadingEstimate ? (
-                    <div className="w-3 h-3 border-2 border-[#F2F3E2] border-t-transparent rounded-full animate-spin" />
+                    <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
                   ) : (
                     <Play size={13} />
                   )}
-                  <span>{loadingEstimate ? 'Estimating...' : 'Re-estimate'}</span>
+                  <span>Refresh matrix</span>
                 </button>
               </div>
             </div>
@@ -558,13 +558,13 @@ export default function App() {
 
             {/* 4. Performance Summary Table */}
             {estimateData?.results && (
-              <div className="gw-panel border border-[#CCD3B5]/70 rounded-lg p-4 overflow-x-auto">
-                <h4 className="text-xs font-semibold text-[#263629] mb-3">
+              <div className="gw-panel border border-[#1E293B]/80 rounded-lg p-4 overflow-x-auto">
+                <h4 className="text-xs font-semibold text-[#F8FAFC] mb-3">
                   Estimation benchmark summary ({selectedScenario} @ {snr} dB)
                 </h4>
                 <table className="w-full text-xs text-left">
                   <thead>
-                    <tr className="border-b border-[#CCD3B5] text-[#647B62] text-[11px]">
+                    <tr className="border-b border-[#1E293B] text-[#94A3B8] text-[11px]">
                       <th className="py-2 px-3 font-medium">Estimator</th>
                       <th className="py-2 px-3 font-medium">Method type</th>
                       <th className="py-2 px-3 font-medium">Parameters</th>
@@ -572,36 +572,36 @@ export default function App() {
                       <th className="py-2 px-3 font-medium">Latency</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#CCD3B5]/60 font-mono text-[11px]">
-                    <tr className="bg-[#789575]/10">
-                      <td className="py-2.5 px-3 font-medium text-[#263629]">NCRT (Proposed)</td>
-                      <td className="py-2.5 px-3 text-[#263629] font-sans">Attention residual transformer</td>
-                      <td className="py-2.5 px-3">888,202</td>
-                      <td className="py-2.5 px-3 text-[#263629] font-semibold">{estimateData.results.ncrt?.nmse_db} dB</td>
-                      <td className="py-2.5 px-3">{estimateData.results.ncrt?.latency_ms} ms</td>
+                  <tbody className="divide-y divide-[#1E293B]/60 font-mono text-[11px]">
+                    <tr className="bg-[#2563EB]/15 border-l-2 border-[#D4FF00]">
+                      <td className="py-2.5 px-3 font-medium text-[#D4FF00]">NCRT (Proposed)</td>
+                      <td className="py-2.5 px-3 text-[#F8FAFC] font-sans">Attention residual transformer</td>
+                      <td className="py-2.5 px-3 text-[#94A3B8]">888,202</td>
+                      <td className="py-2.5 px-3 text-[#D4FF00] font-semibold">{estimateData.results.ncrt?.nmse_db} dB</td>
+                      <td className="py-2.5 px-3 text-[#94A3B8]">{estimateData.results.ncrt?.latency_ms} ms</td>
                     </tr>
                     {estimateData.results.ncrn && (
-                      <tr className="text-[#263629]">
+                      <tr className="text-[#F8FAFC]">
                         <td className="py-2.5 px-3 font-medium">NCRN baseline</td>
-                        <td className="py-2.5 px-3 text-[#647B62] font-sans">ConvLSTM residual</td>
-                        <td className="py-2.5 px-3">1,204,610</td>
-                        <td className="py-2.5 px-3">{estimateData.results.ncrn.nmse_db} dB</td>
-                        <td className="py-2.5 px-3">{estimateData.results.ncrn.latency_ms} ms</td>
+                        <td className="py-2.5 px-3 text-[#94A3B8] font-sans">ConvLSTM residual</td>
+                        <td className="py-2.5 px-3 text-[#94A3B8]">1,204,610</td>
+                        <td className="py-2.5 px-3 text-[#F8FAFC]">{estimateData.results.ncrn.nmse_db} dB</td>
+                        <td className="py-2.5 px-3 text-[#94A3B8]">{estimateData.results.ncrn.latency_ms} ms</td>
                       </tr>
                     )}
-                    <tr className="text-[#263629]">
+                    <tr className="text-[#F8FAFC]">
                       <td className="py-2.5 px-3 font-medium">Wiener MMSE</td>
-                      <td className="py-2.5 px-3 font-sans text-[#647B62]">Statistical reference</td>
-                      <td className="py-2.5 px-3">--</td>
-                      <td className="py-2.5 px-3">{estimateData.results.mmse?.nmse_db} dB</td>
-                      <td className="py-2.5 px-3">{estimateData.results.mmse?.latency_ms} ms</td>
+                      <td className="py-2.5 px-3 font-sans text-[#94A3B8]">Statistical reference</td>
+                      <td className="py-2.5 px-3 text-[#94A3B8]">--</td>
+                      <td className="py-2.5 px-3 text-[#60A5FA]">{estimateData.results.mmse?.nmse_db} dB</td>
+                      <td className="py-2.5 px-3 text-[#94A3B8]">{estimateData.results.mmse?.latency_ms} ms</td>
                     </tr>
-                    <tr className="text-[#647B62]">
+                    <tr className="text-[#94A3B8]">
                       <td className="py-2.5 px-3 font-medium">Least Squares (LS)</td>
                       <td className="py-2.5 px-3 font-sans">Unprocessed observation</td>
-                      <td className="py-2.5 px-3">0</td>
-                      <td className="py-2.5 px-3">{estimateData.results.ls?.nmse_db} dB</td>
-                      <td className="py-2.5 px-3">{estimateData.results.ls?.latency_ms} ms</td>
+                      <td className="py-2.5 px-3 text-[#64748B]">0</td>
+                      <td className="py-2.5 px-3 text-[#94A3B8]">{estimateData.results.ls?.nmse_db} dB</td>
+                      <td className="py-2.5 px-3 text-[#64748B]">{estimateData.results.ls?.latency_ms} ms</td>
                     </tr>
                   </tbody>
                 </table>
@@ -628,13 +628,13 @@ export default function App() {
         <aside className="gw-material gw-glass" aria-label="Adjust glass appearance">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <Settings2 size={16} className="text-[#789575]" />
-              <h3 className="text-sm font-semibold text-[#263629]">Glass appearance</h3>
+              <Settings2 size={16} className="text-[#2563EB]" />
+              <h3 className="text-sm font-semibold text-[#F8FAFC]">Glass appearance</h3>
             </div>
             <button
               type="button"
               onClick={() => setGlassSettingsOpen(false)}
-              className="p-1 rounded-md text-[#647B62] hover:text-[#263629] hover:bg-[#789575]/10 cursor-pointer transition"
+              className="p-1 rounded-md text-[#94A3B8] hover:text-[#F8FAFC] hover:bg-[#1E293B] cursor-pointer transition"
               aria-label="Close glass settings"
             >
               <X size={16} />
@@ -642,13 +642,13 @@ export default function App() {
           </div>
 
           <div className="gw-material-sample">
-            <Layers size={18} className="text-[#789575]" />
-            <span>Refraction Preview</span>
+            <Layers size={18} className="text-[#2563EB]" />
+            <span className="text-[#F8FAFC]">Refraction Preview</span>
           </div>
 
           {/* Presets */}
           <div className="mb-4">
-            <span className="text-[11px] font-medium text-[#647B62] block mb-1.5">Presets</span>
+            <span className="text-[11px] font-medium text-[#94A3B8] block mb-1.5">Presets</span>
             <div className="grid grid-cols-3 gap-1.5">
               {[
                 { name: 'Clear', blur: 14, opacity: 0.18, saturation: 1.15, edge: 0.8 },
@@ -659,7 +659,7 @@ export default function App() {
                   key={p.name}
                   type="button"
                   onClick={() => updateGlass({ blur: p.blur, opacity: p.opacity, saturation: p.saturation, edge: p.edge })}
-                  className="px-2 py-1.5 rounded-md text-xs font-medium border border-[#CCD3B5] bg-[#EEF0DC]/70 hover:bg-[#E5E8CE] text-[#263629] transition cursor-pointer text-center"
+                  className="px-2 py-1.5 rounded-md text-xs font-medium border border-[#1E293B] bg-[#060911] hover:bg-[#1E293B] text-[#F8FAFC] transition cursor-pointer text-center"
                 >
                   {p.name}
                 </button>
@@ -670,9 +670,9 @@ export default function App() {
           {/* Sliders */}
           <div className="space-y-3 text-xs">
             <div>
-              <div className="flex justify-between text-[11px] text-[#647B62] mb-1">
+              <div className="flex justify-between text-[11px] text-[#94A3B8] mb-1">
                 <span>Backdrop blur</span>
-                <span className="font-mono text-[#263629]">{glass.blur}px</span>
+                <span className="font-mono text-[#D4FF00]">{glass.blur}px</span>
               </div>
               <input
                 type="range"
@@ -681,14 +681,14 @@ export default function App() {
                 step="1"
                 value={glass.blur}
                 onChange={(e) => updateGlass({ blur: Number(e.target.value) })}
-                className="w-full accent-[#789575] cursor-pointer"
+                className="w-full accent-[#2563EB] cursor-pointer"
               />
             </div>
 
             <div>
-              <div className="flex justify-between text-[11px] text-[#647B62] mb-1">
+              <div className="flex justify-between text-[11px] text-[#94A3B8] mb-1">
                 <span>Opacity</span>
-                <span className="font-mono text-[#263629]">{Math.round(glass.opacity * 100)}%</span>
+                <span className="font-mono text-[#D4FF00]">{Math.round(glass.opacity * 100)}%</span>
               </div>
               <input
                 type="range"
@@ -697,14 +697,14 @@ export default function App() {
                 step="0.02"
                 value={glass.opacity}
                 onChange={(e) => updateGlass({ opacity: Number(e.target.value) })}
-                className="w-full accent-[#789575] cursor-pointer"
+                className="w-full accent-[#2563EB] cursor-pointer"
               />
             </div>
 
             <div>
-              <div className="flex justify-between text-[11px] text-[#647B62] mb-1">
+              <div className="flex justify-between text-[11px] text-[#94A3B8] mb-1">
                 <span>Saturation</span>
-                <span className="font-mono text-[#263629]">{glass.saturation.toFixed(2)}×</span>
+                <span className="font-mono text-[#D4FF00]">{glass.saturation.toFixed(2)}×</span>
               </div>
               <input
                 type="range"
@@ -713,14 +713,14 @@ export default function App() {
                 step="0.05"
                 value={glass.saturation}
                 onChange={(e) => updateGlass({ saturation: Number(e.target.value) })}
-                className="w-full accent-[#789575] cursor-pointer"
+                className="w-full accent-[#2563EB] cursor-pointer"
               />
             </div>
 
             <div>
-              <div className="flex justify-between text-[11px] text-[#647B62] mb-1">
+              <div className="flex justify-between text-[11px] text-[#94A3B8] mb-1">
                 <span>Edge highlight</span>
-                <span className="font-mono text-[#263629]">{Math.round(glass.edge * 100)}%</span>
+                <span className="font-mono text-[#D4FF00]">{Math.round(glass.edge * 100)}%</span>
               </div>
               <input
                 type="range"
@@ -729,17 +729,17 @@ export default function App() {
                 step="0.05"
                 value={glass.edge}
                 onChange={(e) => updateGlass({ edge: Number(e.target.value) })}
-                className="w-full accent-[#789575] cursor-pointer"
+                className="w-full accent-[#2563EB] cursor-pointer"
               />
             </div>
 
             <div>
-              <div className="flex justify-between text-[11px] text-[#647B62] mb-1.5">
+              <div className="flex justify-between text-[11px] text-[#94A3B8] mb-1.5">
                 <span>Glass tint</span>
-                <span className="font-mono text-[#263629]">{glass.tint}</span>
+                <span className="font-mono text-[#D4FF00]">{glass.tint}</span>
               </div>
               <div className="flex items-center gap-2">
-                {['#ffffff', '#eadbc7', '#e5e8ce', '#789575', '#d4e0d2', '#263629'].map((color) => (
+                {['#060911', '#1d4ed8', '#2563eb', '#D4FF00', '#38bdf8', '#ffffff'].map((color) => (
                   <button
                     key={color}
                     type="button"
@@ -747,8 +747,8 @@ export default function App() {
                     style={{ backgroundColor: color }}
                     className={`w-6 h-6 rounded-full border transition cursor-pointer ${
                       glass.tint.toLowerCase() === color.toLowerCase()
-                        ? 'ring-2 ring-[#789575] scale-110 border-white'
-                        : 'border-[#CCD3B5]'
+                        ? 'ring-2 ring-[#2563EB] scale-110 border-white'
+                        : 'border-[#1E293B]'
                     }`}
                     title={color}
                   />
@@ -757,7 +757,7 @@ export default function App() {
                   type="color"
                   value={glass.tint}
                   onChange={(e) => updateGlass({ tint: e.target.value })}
-                  className="w-6 h-6 p-0 border border-[#CCD3B5] rounded cursor-pointer bg-transparent"
+                  className="w-6 h-6 p-0 border border-[#1E293B] rounded cursor-pointer bg-transparent"
                   title="Custom color"
                 />
               </div>
@@ -767,7 +767,7 @@ export default function App() {
           <button
             type="button"
             onClick={() => updateGlass(defaultGlass)}
-            className="mt-4 w-full py-1.5 rounded-md text-xs font-medium border border-[#CCD3B5] bg-[#EEF0DC]/80 hover:bg-[#E5E8CE] text-[#647B62] hover:text-[#263629] transition cursor-pointer text-center"
+            className="mt-4 w-full py-1.5 rounded-md text-xs font-medium border border-[#1E293B] bg-[#060911] hover:bg-[#1E293B] text-[#94A3B8] hover:text-[#F8FAFC] transition cursor-pointer text-center"
           >
             Reset to defaults
           </button>
@@ -791,27 +791,27 @@ export default function App() {
       />
 
       {/* Modern Scientific Footer */}
-      <footer className="border-t border-[#CCD3B5]/60 gw-glass mt-auto text-xs text-[#647B62]">
+      <footer className="border-t border-[#1E293B]/70 gw-glass mt-auto text-xs text-[#94A3B8]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
             {/* Col 1: Brand & Abstract */}
             <div className="space-y-2.5">
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-md bg-[#789575] flex items-center justify-center text-[#F2F3E2] shadow-xs">
+                <div className="w-7 h-7 rounded-md bg-[#2563EB] flex items-center justify-center text-white shadow-xs">
                   <Radio size={16} />
                 </div>
-                <span className="text-xs font-semibold text-[#263629]">
+                <span className="text-xs font-semibold text-[#F8FAFC]">
                   Massive MIMO AI Channel Studio
                 </span>
               </div>
-              <p className="text-[11px] leading-relaxed text-[#647B62]">
+              <p className="text-[11px] leading-relaxed text-[#94A3B8]">
                 Attention-based residual learning channel estimation platform for 5G-Advanced and 6G Sub-THz Massive MIMO systems.
               </p>
               <div className="flex flex-wrap gap-1.5 pt-0.5">
-                <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-[#E5E8CE] text-[#647B62] border border-[#CCD3B5]">
+                <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-[#0B1120] text-[#60A5FA] border border-[#1E293B]">
                   VehCom 2026
                 </span>
-                <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-[#E5E8CE] text-[#647B62] border border-[#CCD3B5]">
+                <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-[#0B1120] text-[#60A5FA] border border-[#1E293B]">
                   64×64 UPA
                 </span>
               </div>
@@ -819,35 +819,35 @@ export default function App() {
 
             {/* Col 2: Neural Architectures */}
             <div className="space-y-2">
-              <h4 className="text-[11px] font-semibold text-[#263629]">
+              <h4 className="text-[11px] font-semibold text-[#F8FAFC]">
                 Neural architectures
               </h4>
-              <ul className="space-y-1.5 text-[11px] text-[#263629]/90">
+              <ul className="space-y-1.5 text-[11px] text-[#94A3B8]">
                 <li className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#789575]" />
-                  <span><strong>NCRT:</strong> Attention residual transformer (888K)</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#D4FF00]" />
+                  <span><strong className="text-[#F8FAFC]">NCRT:</strong> Attention residual transformer (888K)</span>
                 </li>
                 <li className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#A7B99A]" />
-                  <span><strong>NCRN:</strong> ConvLSTM spatial-temporal baseline (1.20M)</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#F43F5E]" />
+                  <span><strong className="text-[#F8FAFC]">NCRN:</strong> ConvLSTM spatial-temporal baseline (1.20M)</span>
                 </li>
                 <li className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#CCD3B5]" />
-                  <span><strong>Wiener MMSE:</strong> Statistical covariance benchmark</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]" />
+                  <span><strong className="text-[#F8FAFC]">Wiener MMSE:</strong> Statistical covariance benchmark</span>
                 </li>
                 <li className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#CCD3B5]" />
-                  <span><strong>Least Squares:</strong> Unprocessed observation</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#64748B]" />
+                  <span><strong className="text-[#F8FAFC]">Least Squares:</strong> Unprocessed observation</span>
                 </li>
               </ul>
             </div>
 
             {/* Col 3: Specifications & Protocols */}
             <div className="space-y-2">
-              <h4 className="text-[11px] font-semibold text-[#263629]">
+              <h4 className="text-[11px] font-semibold text-[#F8FAFC]">
                 Channels & standards
               </h4>
-              <ul className="space-y-1.5 text-[11px] text-[#263629]/90">
+              <ul className="space-y-1.5 text-[11px] text-[#94A3B8]">
                 <li>• 3GPP TR 38.901 standard models (TDL-A through TDL-E)</li>
                 <li>• 142 GHz Sub-THz ray-tracing dataset (MATLAB)</li>
                 <li>• Virtual beamspace 2D-FFT angular representation</li>
@@ -858,49 +858,49 @@ export default function App() {
 
             {/* Col 4: Artifact Downloads & Citation */}
             <div className="space-y-2">
-              <h4 className="text-[11px] font-semibold text-[#263629]">
+              <h4 className="text-[11px] font-semibold text-[#F8FAFC]">
                 Research artifacts
               </h4>
               <div className="flex flex-col gap-1.5">
                 <a
                   href={`${getApiBase()}/download/model`}
-                  className="inline-flex items-center justify-between px-2.5 py-1.5 rounded-md bg-[#E5E8CE] hover:bg-[#F2F3E2] border border-[#CCD3B5] text-[11px] font-medium text-[#263629] transition"
+                  className="inline-flex items-center justify-between px-2.5 py-1.5 rounded-md bg-[#0B1120] hover:bg-[#1E293B] border border-[#1E293B] text-[11px] font-medium text-[#F8FAFC] transition"
                 >
                   <span>Trained model weights</span>
-                  <span className="font-mono text-[10px] text-[#789575]">.keras</span>
+                  <span className="font-mono text-[10px] text-[#D4FF00]">.keras</span>
                 </a>
                 <a
                   href={`${getApiBase()}/download/csv/6g`}
-                  className="inline-flex items-center justify-between px-2.5 py-1.5 rounded-md bg-[#E5E8CE] hover:bg-[#F2F3E2] border border-[#CCD3B5] text-[11px] font-medium text-[#263629] transition"
+                  className="inline-flex items-center justify-between px-2.5 py-1.5 rounded-md bg-[#0B1120] hover:bg-[#1E293B] border border-[#1E293B] text-[11px] font-medium text-[#F8FAFC] transition"
                 >
                   <span>500-sample benchmark</span>
-                  <span className="font-mono text-[10px] text-[#789575]">.csv</span>
+                  <span className="font-mono text-[10px] text-[#60A5FA]">.csv</span>
                 </a>
                 <a
                   href={`${getApiBase()}/download/release-zip`}
-                  className="inline-flex items-center justify-between px-2.5 py-1.5 rounded-md bg-[#789575] hover:bg-[#668263] text-[#F2F3E2] text-[11px] font-medium transition"
+                  className="inline-flex items-center justify-between px-2.5 py-1.5 rounded-md bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-[11px] font-medium transition shadow-sm"
                 >
                   <span>Complete research archive</span>
-                  <span className="font-mono text-[10px] text-[#E5E8CE]">.zip</span>
+                  <span className="font-mono text-[10px] text-blue-200">.zip</span>
                 </a>
               </div>
             </div>
           </div>
 
           {/* Bottom Bar */}
-          <div className="border-t border-[#CCD3B5] pt-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px]">
-            <p className="text-[#647B62]">
+          <div className="border-t border-[#1E293B] pt-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px]">
+            <p className="text-[#94A3B8]">
               Published in <em>Vehicular Communications</em> (Elsevier) • Open research artifact.
             </p>
             <div className="flex items-center gap-3 font-mono text-[10px]">
               <div className="flex items-center gap-1.5">
-                <span className={`w-1.5 h-1.5 rounded-full ${backendOnline ? 'bg-emerald-600' : 'bg-rose-500'}`} />
-                <span className={backendOnline ? 'text-emerald-800' : 'text-rose-600'}>
+                <span className={`w-1.5 h-1.5 rounded-full ${backendOnline ? 'bg-[#D4FF00] shadow-sm shadow-[#D4FF00]/50' : 'bg-rose-500'}`} />
+                <span className={backendOnline ? 'text-[#D4FF00]' : 'text-rose-400'}>
                   {backendOnline ? 'Backend online' : 'Connecting to backend...'}
                 </span>
               </div>
               <span>•</span>
-              <span className="text-[#263629]">64×64 UPA</span>
+              <span className="text-[#60A5FA]">64×64 UPA</span>
             </div>
           </div>
         </div>

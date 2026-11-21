@@ -154,7 +154,7 @@ export default function MatlabStudio({ onMetricsUpdate }) {
       y: bmData.ls,
       mode: 'lines+markers',
       name: 'Least Squares (LS)',
-      line: { color: '#7B8B79', dash: 'dash', width: 1.8 },
+      line: { color: '#64748B', dash: 'dash', width: 1.8 },
       marker: { symbol: 'triangle-up', size: 6 },
     });
     benchmarkTraces.push({
@@ -162,7 +162,7 @@ export default function MatlabStudio({ onMetricsUpdate }) {
       y: bmData.mmse,
       mode: 'lines+markers',
       name: 'Wiener MMSE',
-      line: { color: '#446E65', dash: 'dashdot', width: 2 },
+      line: { color: '#38BDF8', dash: 'dashdot', width: 2 },
       marker: { symbol: 'diamond', size: 6 },
     });
     benchmarkTraces.push({
@@ -170,7 +170,7 @@ export default function MatlabStudio({ onMetricsUpdate }) {
       y: bmData.ncrn,
       mode: 'lines+markers',
       name: 'NCRN (ConvLSTM)',
-      line: { color: '#A05344', width: 2 },
+      line: { color: '#F43F5E', width: 2 },
       marker: { symbol: 'circle', size: 6 },
     });
     benchmarkTraces.push({
@@ -178,7 +178,7 @@ export default function MatlabStudio({ onMetricsUpdate }) {
       y: bmData.ncrt_base,
       mode: 'lines+markers',
       name: 'NCRT (Synthetic Base)',
-      line: { color: '#788E52', dash: 'dot', width: 2 },
+      line: { color: '#3B82F6', dash: 'dot', width: 2 },
       marker: { symbol: 'cross', size: 7 },
     });
     benchmarkTraces.push({
@@ -186,8 +186,8 @@ export default function MatlabStudio({ onMetricsUpdate }) {
       y: bmData.ncrt_matlab,
       mode: 'lines+markers',
       name: is6G ? 'NCRT (6G Sub-THz Trained)' : 'NCRT (5G-Trained)',
-      line: { color: '#263629', width: 3.2 },
-      marker: { symbol: 'square', size: 8, color: '#789575', line: { color: '#263629', width: 1.5 } },
+      line: { color: '#D4FF00', width: 3.2 },
+      marker: { symbol: 'square', size: 8, color: '#D4FF00', line: { color: '#060911', width: 1.5 } },
     });
   }
 
@@ -200,33 +200,33 @@ export default function MatlabStudio({ onMetricsUpdate }) {
   return (
     <div className="space-y-4">
       {/* 1. Header Toolbar with Generator Label */}
-      <div className="gw-panel border border-[#CCD3B5]/70 rounded-lg p-4 space-y-3">
+      <div className="gw-panel border border-[#1E293B]/80 rounded-lg p-4 space-y-3">
         {/* Row 1: Title, Standard Toggle, Generator Origin */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-[#CCD3B5]/70 pb-3">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-[#1E293B]/70 pb-3">
           <div className="space-y-1">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-[#789575] text-[#F2F3E2]">
+              <span className="px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-[#2563EB] text-white">
                 {datasetConfig.badge}
               </span>
-              <h2 className="text-sm sm:text-base font-semibold text-[#263629] tracking-tight">
+              <h2 className="text-sm sm:text-base font-semibold text-[#F8FAFC] tracking-tight">
                 {datasetConfig.title}
               </h2>
             </div>
-            {/* Explicit Channel Generator Origin Label (Section 8) */}
-            <p className="text-[11px] text-[#647B62] font-mono flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#789575] shrink-0" />
+            {/* Explicit Channel Generator Origin Label */}
+            <p className="text-[11px] text-[#94A3B8] font-mono flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D4FF00] shrink-0" />
               <span>{datasetConfig.generatorLabel}</span>
             </p>
           </div>
 
           {/* Segmented Radio Buttons for 6G vs 5G */}
-          <div className="inline-flex bg-[#EEF0DC] p-0.5 rounded-md border border-[#CCD3B5] shrink-0 self-start md:self-center text-xs font-medium">
+          <div className="inline-flex bg-[#0B1120] p-0.5 rounded-md border border-[#1E293B] shrink-0 self-start md:self-center text-xs font-medium">
             <button
               onClick={() => setSelectedDataset('6g_subthz')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded transition cursor-pointer ${
                 is6G 
-                  ? 'bg-[#789575] text-[#F2F3E2] shadow-xs' 
-                  : 'text-[#647B62] hover:text-[#263629]'
+                  ? 'bg-[#2563EB] text-white shadow-xs' 
+                  : 'text-[#94A3B8] hover:text-[#F8FAFC]'
               }`}
             >
               <Play size={13} />
@@ -237,8 +237,8 @@ export default function MatlabStudio({ onMetricsUpdate }) {
               onClick={() => setSelectedDataset('5g_full')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded transition cursor-pointer ${
                 !is6G 
-                  ? 'bg-[#789575] text-[#F2F3E2] shadow-xs' 
-                  : 'text-[#647B62] hover:text-[#263629]'
+                  ? 'bg-[#2563EB] text-white shadow-xs' 
+                  : 'text-[#94A3B8] hover:text-[#F8FAFC]'
               }`}
             >
               <Radio size={13} />
@@ -249,21 +249,21 @@ export default function MatlabStudio({ onMetricsUpdate }) {
 
         {/* Row 2: Physics Parameters Chips */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-          <div className="bg-[#EEF0DC] px-2.5 py-1.5 rounded-md border border-[#CCD3B5] min-w-0">
-            <span className="text-[#647B62] block text-[10px] font-medium truncate">Carrier frequency</span>
-            <span className="text-[#263629] font-mono font-semibold text-xs block truncate">{datasetConfig.fc}</span>
+          <div className="bg-[#0B1120] px-2.5 py-1.5 rounded-md border border-[#1E293B] min-w-0">
+            <span className="text-[#64748B] block text-[10px] font-medium truncate">Carrier frequency</span>
+            <span className="text-[#F8FAFC] font-mono font-semibold text-xs block truncate">{datasetConfig.fc}</span>
           </div>
-          <div className="bg-[#EEF0DC] px-2.5 py-1.5 rounded-md border border-[#CCD3B5] min-w-0">
-            <span className="text-[#647B62] block text-[10px] font-medium truncate">Array geometry</span>
-            <span className="text-[#263629] font-mono font-semibold text-xs block truncate">{datasetConfig.array}</span>
+          <div className="bg-[#0B1120] px-2.5 py-1.5 rounded-md border border-[#1E293B] min-w-0">
+            <span className="text-[#64748B] block text-[10px] font-medium truncate">Array geometry</span>
+            <span className="text-[#F8FAFC] font-mono font-semibold text-xs block truncate">{datasetConfig.array}</span>
           </div>
-          <div className="bg-[#EEF0DC] px-2.5 py-1.5 rounded-md border border-[#CCD3B5] min-w-0">
-            <span className="text-[#647B62] block text-[10px] font-medium truncate">Velocity & Doppler</span>
-            <span className="text-[#263629] font-mono font-semibold text-xs block truncate">{datasetConfig.velocity} (fd={datasetConfig.doppler})</span>
+          <div className="bg-[#0B1120] px-2.5 py-1.5 rounded-md border border-[#1E293B] min-w-0">
+            <span className="text-[#64748B] block text-[10px] font-medium truncate">Velocity & Doppler</span>
+            <span className="text-[#F8FAFC] font-mono font-semibold text-xs block truncate">{datasetConfig.velocity} (fd={datasetConfig.doppler})</span>
           </div>
-          <div className="bg-[#EEF0DC] px-2.5 py-1.5 rounded-md border border-[#CCD3B5] min-w-0">
-            <span className="text-[#647B62] block text-[10px] font-medium truncate">Spatial propagation</span>
-            <span className="text-[#263629] font-mono font-medium text-xs block truncate" title={datasetConfig.sparsity}>
+          <div className="bg-[#0B1120] px-2.5 py-1.5 rounded-md border border-[#1E293B] min-w-0">
+            <span className="text-[#64748B] block text-[10px] font-medium truncate">Spatial propagation</span>
+            <span className="text-[#D4FF00] font-mono font-medium text-xs block truncate" title={datasetConfig.sparsity}>
               {datasetConfig.sparsity}
             </span>
           </div>
@@ -272,32 +272,32 @@ export default function MatlabStudio({ onMetricsUpdate }) {
         {/* Row 3: Interactive Stepper & SNR Controls */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-medium text-[#647B62]">Snapshot:</span>
-            <div className="flex items-center bg-[#EEF0DC] border border-[#CCD3B5] rounded-md p-0.5">
+            <span className="text-xs font-medium text-[#94A3B8]">Snapshot:</span>
+            <div className="flex items-center bg-[#0B1120] border border-[#1E293B] rounded-md p-0.5">
               <button
                 onClick={() => setSampleIdx(Math.max(0, sampleIdx - 1))}
-                className="p-1 hover:bg-[#F2F3E2] text-[#263629] rounded cursor-pointer transition"
+                className="p-1 hover:bg-[#1E293B] text-[#F8FAFC] rounded cursor-pointer transition"
                 title="Previous snapshot"
               >
                 <ChevronLeft size={14} />
               </button>
-              <span className="px-2 text-xs font-mono font-semibold text-[#263629]">
+              <span className="px-2 text-xs font-mono font-semibold text-[#D4FF00]">
                 Snapshot #{sampleIdx}
               </span>
               <button
                 onClick={() => setSampleIdx(Math.min(19, sampleIdx + 1))}
-                className="p-1 hover:bg-[#F2F3E2] text-[#263629] rounded cursor-pointer transition"
+                className="p-1 hover:bg-[#1E293B] text-[#F8FAFC] rounded cursor-pointer transition"
                 title="Next snapshot"
               >
                 <ChevronRight size={14} />
               </button>
             </div>
-            <span className="text-[10px] font-mono text-[#647B62]">(Sample index: 0–19)</span>
+            <span className="text-[10px] font-mono text-[#64748B]">(Sample index: 0–19)</span>
           </div>
 
           {/* SNR Slider */}
           <div className="flex items-center gap-2.5 flex-1 max-w-xs">
-            <span className="text-xs font-medium text-[#647B62] shrink-0">SNR:</span>
+            <span className="text-xs font-medium text-[#94A3B8] shrink-0">SNR:</span>
             <input
               type="range"
               min="-15"
@@ -305,21 +305,21 @@ export default function MatlabStudio({ onMetricsUpdate }) {
               step="5"
               value={snr}
               onChange={(e) => setSnr(parseFloat(e.target.value))}
-              className="w-full accent-[#789575] cursor-pointer h-1.5 bg-[#EEF0DC] rounded border border-[#CCD3B5]"
+              className="w-full accent-[#2563EB] cursor-pointer h-1.5 bg-[#0B1120] rounded border border-[#1E293B]"
             />
-            <span className="text-xs font-mono font-semibold text-[#263629] bg-[#EEF0DC] border border-[#CCD3B5] px-2 py-0.5 rounded shrink-0">
+            <span className="text-xs font-mono font-semibold text-[#D4FF00] bg-[#0B1120] border border-[#1E293B] px-2 py-0.5 rounded shrink-0">
               {snr >= 0 ? `+${snr}` : snr} dB
             </span>
           </div>
 
           {/* Colormap Scale Toggle */}
           <div className="flex items-center gap-2">
-            <label className="flex items-center gap-1.5 text-xs text-[#647B62] font-normal cursor-pointer">
+            <label className="flex items-center gap-1.5 text-xs text-[#94A3B8] font-normal cursor-pointer">
               <input
                 type="checkbox"
                 checked={sharedColorScale}
                 onChange={(e) => setSharedColorScale(e.target.checked)}
-                className="accent-[#789575] rounded"
+                className="accent-[#2563EB] rounded"
               />
               <span>Shared Z-scale</span>
             </label>
@@ -327,10 +327,10 @@ export default function MatlabStudio({ onMetricsUpdate }) {
             <button
               onClick={handleEvaluate}
               disabled={loading}
-              className="flex items-center justify-center gap-1.5 bg-[#789575] hover:bg-[#668263] disabled:opacity-50 text-[#F2F3E2] font-medium py-1.5 px-3.5 rounded-md shadow-xs transition text-xs cursor-pointer border border-[#789575]"
+              className="flex items-center justify-center gap-1.5 bg-[#2563EB] hover:bg-[#1D4ED8] disabled:opacity-50 text-white font-medium py-1.5 px-3.5 rounded-md shadow-sm transition text-xs cursor-pointer border border-[#3B82F6]"
             >
               {loading ? (
-                <div className="w-3 h-3 border-2 border-[#F2F3E2] border-t-transparent rounded-full animate-spin" />
+                <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
               ) : (
                 <Play size={13} />
               )}
@@ -340,17 +340,17 @@ export default function MatlabStudio({ onMetricsUpdate }) {
         </div>
       </div>
 
-      {/* 2. FIVE-PANEL VISUALIZATION GRID (Section 5) */}
+      {/* 2. FIVE-PANEL VISUALIZATION GRID */}
       <div className="space-y-2.5">
-        <div className="flex items-center justify-between border-b border-[#CCD3B5]/60 pb-1.5">
-          <h3 className="text-xs font-semibold text-[#263629] flex items-center gap-1.5">
-            <Layers size={14} className="text-[#789575]" />
+        <div className="flex items-center justify-between border-b border-[#1E293B]/70 pb-1.5">
+          <h3 className="text-xs font-semibold text-[#F8FAFC] flex items-center gap-1.5">
+            <Layers size={14} className="text-[#60A5FA]" />
             <span>Channel response & spatial spectrum (5 panels)</span>
           </h3>
-          <div className="flex items-center gap-2 text-[10px] text-[#647B62] font-mono">
-            <span>Experiment SNR: <strong className="text-[#263629]">{snr} dB</strong></span>
+          <div className="flex items-center gap-2 text-[10px] text-[#94A3B8] font-mono">
+            <span>Experiment SNR: <strong className="text-[#D4FF00]">{snr} dB</strong></span>
             <span>•</span>
-            <span>Array: <strong className="text-[#263629]">64×64 UPA</strong></span>
+            <span>Array: <strong className="text-[#60A5FA]">64×64 UPA</strong></span>
           </div>
         </div>
 
@@ -415,16 +415,16 @@ export default function MatlabStudio({ onMetricsUpdate }) {
       </div>
 
       {/* 3. Sub-Tabs: Benchmark Curve vs MATLAB Code vs Physical Insights */}
-      <div className="gw-panel border border-[#CCD3B5]/70 rounded-xl overflow-hidden">
+      <div className="gw-panel border border-[#1E293B]/80 rounded-xl overflow-hidden">
         {/* Navigation Bar for Sub-Tabs */}
-        <div className="flex items-center justify-between border-b border-[#CCD3B5] bg-[#EEF0DC] px-3.5 py-2">
-          <div className="inline-flex bg-[#E5E8CE] p-0.5 rounded-lg border border-[#CCD3B5] text-xs font-bold">
+        <div className="flex items-center justify-between border-b border-[#1E293B] bg-[#0B1120] px-3.5 py-2">
+          <div className="inline-flex bg-[#060911] p-0.5 rounded-lg border border-[#1E293B] text-xs font-bold">
             <button
               onClick={() => setActiveSubTab('benchmark')}
               className={`flex items-center gap-1.5 px-3 py-1 rounded-md transition cursor-pointer ${
                 activeSubTab === 'benchmark'
-                  ? 'bg-[#789575] text-[#F2F3E2] shadow-sm'
-                  : 'text-[#647B62] hover:text-[#263629]'
+                  ? 'bg-[#2563EB] text-white shadow-sm'
+                  : 'text-[#94A3B8] hover:text-[#F8FAFC]'
               }`}
             >
               <BarChart2 size={12} />
@@ -435,8 +435,8 @@ export default function MatlabStudio({ onMetricsUpdate }) {
               onClick={() => setActiveSubTab('insights')}
               className={`flex items-center gap-1.5 px-3 py-1 rounded-md transition cursor-pointer ${
                 activeSubTab === 'insights'
-                  ? 'bg-[#789575] text-[#F2F3E2] shadow-sm'
-                  : 'text-[#647B62] hover:text-[#263629]'
+                  ? 'bg-[#2563EB] text-white shadow-sm'
+                  : 'text-[#94A3B8] hover:text-[#F8FAFC]'
               }`}
             >
               <Info size={12} />
@@ -447,8 +447,8 @@ export default function MatlabStudio({ onMetricsUpdate }) {
               onClick={() => setActiveSubTab('code')}
               className={`flex items-center gap-1.5 px-3 py-1 rounded-md transition cursor-pointer ${
                 activeSubTab === 'code'
-                  ? 'bg-[#789575] text-[#F2F3E2] shadow-sm'
-                  : 'text-[#647B62] hover:text-[#263629]'
+                  ? 'bg-[#2563EB] text-white shadow-sm'
+                  : 'text-[#94A3B8] hover:text-[#F8FAFC]'
               }`}
             >
               <FileCode size={12} />
@@ -461,16 +461,16 @@ export default function MatlabStudio({ onMetricsUpdate }) {
               <a
                 href={`${getApiBase()}/download/script`}
                 download="export_6g_channels.m"
-                className="flex items-center gap-1 px-2.5 py-1 rounded bg-[#789575] hover:bg-[#668263] text-[#F2F3E2] text-xs font-bold transition shadow-sm"
+                className="flex items-center gap-1 px-2.5 py-1 rounded bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold transition shadow-sm"
               >
                 <Download size={12} />
                 <span>Download .m</span>
               </a>
               <button
                 onClick={handleCopyScript}
-                className="flex items-center gap-1 px-2.5 py-1 rounded bg-[#EEF0DC] hover:bg-[#F2F3E2] text-[#263629] border border-[#CCD3B5] text-xs font-bold transition cursor-pointer shadow-subtle"
+                className="flex items-center gap-1 px-2.5 py-1 rounded bg-[#0B1120] hover:bg-[#1E293B] text-[#F8FAFC] border border-[#1E293B] text-xs font-bold transition cursor-pointer"
               >
-                {copied ? <Check size={12} className="text-[#36663E]" /> : <Copy size={12} />}
+                {copied ? <Check size={12} className="text-[#D4FF00]" /> : <Copy size={12} />}
                 <span>{copied ? 'Copied' : 'Copy'}</span>
               </button>
             </div>
@@ -482,43 +482,43 @@ export default function MatlabStudio({ onMetricsUpdate }) {
           <div className="p-4 space-y-3">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
-                <h4 className="text-xs font-semibold text-[#263629]">
+                <h4 className="text-xs font-semibold text-[#F8FAFC]">
                   500-Realization Monte Carlo benchmark ({is6G ? '6G Sub-THz 142 GHz' : '5G NR 28 GHz'})
                 </h4>
-                <p className="text-[11px] text-[#647B62]">
+                <p className="text-[11px] text-[#94A3B8]">
                   Normalized mean squared error (NMSE in dB) across −15 dB to +20 dB SNR • Manuscript baseline
                 </p>
               </div>
-              <span className="text-[10px] px-2 py-0.5 rounded bg-[#EEF0DC] text-[#263629] border border-[#CCD3B5] font-mono self-start sm:self-center">
+              <span className="text-[10px] px-2 py-0.5 rounded bg-[#0B1120] text-[#60A5FA] border border-[#1E293B] font-mono self-start sm:self-center">
                 500 samples
               </span>
             </div>
 
-            <div className="w-full h-[320px] overflow-hidden bg-[#F5F5E9] rounded-md border border-[#CCD3B5]/60">
+            <div className="w-full h-[320px] overflow-hidden bg-[#060911] rounded-md border border-[#1E293B]/70">
               <Plot
                 data={benchmarkTraces}
                 layout={{
                   autosize: true,
                   margin: { t: 15, b: 40, l: 45, r: 15 },
                   paper_bgcolor: 'transparent',
-                  plot_bgcolor: '#F5F5E9',
+                  plot_bgcolor: '#060911',
                   xaxis: {
-                    title: { text: 'Signal-to-Noise Ratio (SNR in dB)', font: { color: '#647B62', size: 10 } },
-                    tickfont: { color: '#647B62', size: 9 },
-                    gridcolor: '#DCE2C8',
+                    title: { text: 'Signal-to-Noise Ratio (SNR in dB)', font: { color: '#94A3B8', size: 10 } },
+                    tickfont: { color: '#64748B', size: 9 },
+                    gridcolor: '#1E293B',
                     dtick: 5,
                   },
                   yaxis: {
-                    title: { text: 'NMSE (dB)', font: { color: '#647B62', size: 10 } },
-                    tickfont: { color: '#647B62', size: 9 },
-                    gridcolor: '#DCE2C8',
+                    title: { text: 'NMSE (dB)', font: { color: '#94A3B8', size: 10 } },
+                    tickfont: { color: '#64748B', size: 9 },
+                    gridcolor: '#1E293B',
                   },
                   legend: {
                     x: 0.02,
                     y: 0.05,
-                    font: { color: '#263629', size: 9 },
-                    bgcolor: 'rgba(242, 243, 226, 0.92)',
-                    bordercolor: '#CCD3B5',
+                    font: { color: '#F8FAFC', size: 9 },
+                    bgcolor: 'rgba(11, 17, 32, 0.92)',
+                    bordercolor: '#1E293B',
                     borderwidth: 1,
                   },
                 }}
@@ -529,22 +529,22 @@ export default function MatlabStudio({ onMetricsUpdate }) {
             </div>
 
             {/* Benchmark Info Panel */}
-            <div className="bg-[#EEF0DC] p-2.5 rounded-md border border-[#CCD3B5] text-[10px] text-[#647B62] font-mono grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div className="bg-[#0B1120] p-2.5 rounded-md border border-[#1E293B] text-[10px] text-[#94A3B8] font-mono grid grid-cols-2 sm:grid-cols-4 gap-2">
               <div>
-                <span className="block text-[9px] text-[#647B62]">Dataset file:</span>
-                <span className="text-[#263629] font-medium">{is6G ? 'matlab_6g_channels.mat' : 'matlab_5g_channels.mat'}</span>
+                <span className="block text-[9px] text-[#64748B]">Dataset file:</span>
+                <span className="text-[#F8FAFC] font-medium">{is6G ? 'matlab_6g_channels.mat' : 'matlab_5g_channels.mat'}</span>
               </div>
               <div>
-                <span className="block text-[9px] text-[#647B62]">Model weights:</span>
-                <span className="text-[#263629] font-medium">ncrt_tdl_64_matlab_5g_6g.keras</span>
+                <span className="block text-[9px] text-[#64748B]">Model weights:</span>
+                <span className="text-[#F8FAFC] font-medium">ncrt_tdl_64_matlab_5g_6g.keras</span>
               </div>
               <div>
-                <span className="block text-[9px] text-[#647B62]">Carrier frequency:</span>
-                <span className="text-[#263629] font-medium">{datasetConfig.fc}</span>
+                <span className="block text-[9px] text-[#64748B]">Carrier frequency:</span>
+                <span className="text-[#D4FF00] font-medium">{datasetConfig.fc}</span>
               </div>
               <div>
-                <span className="block text-[9px] text-[#647B62]">Evaluation status:</span>
-                <span className="text-[#263629] font-medium">Complete (500 Monte Carlo)</span>
+                <span className="block text-[9px] text-[#64748B]">Evaluation status:</span>
+                <span className="text-[#60A5FA] font-medium">Complete (500 Monte Carlo)</span>
               </div>
             </div>
           </div>
@@ -552,30 +552,30 @@ export default function MatlabStudio({ onMetricsUpdate }) {
 
         {/* Sub-Tab 2: Physical Insights */}
         {activeSubTab === 'insights' && (
-          <div className="p-4 space-y-3 text-xs text-[#263629] leading-relaxed">
+          <div className="p-4 space-y-3 text-xs text-[#F8FAFC] leading-relaxed">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-              <div className="bg-[#EEF0DC] p-3.5 rounded-lg border border-[#CCD3B5] space-y-1.5">
-                <h5 className="font-semibold text-[#263629] text-xs flex items-center gap-1.5">
-                  <Activity size={14} className="text-[#789575]" />
+              <div className="bg-[#0B1120] p-3.5 rounded-lg border border-[#1E293B] space-y-1.5">
+                <h5 className="font-semibold text-[#F8FAFC] text-xs flex items-center gap-1.5">
+                  <Activity size={14} className="text-[#D4FF00]" />
                   Why 6G Sub-THz exhibits extreme sparsity
                 </h5>
-                <p className="text-[11px] text-[#263629]/90">
-                  At 142 GHz, electromagnetic propagation experiences extreme free-space path loss and severe atmospheric attenuation. Most non-line-of-sight (NLOS) diffuse reflections fall below the noise floor, leaving only <strong>1 to 3 dominant spatial clusters</strong>.
+                <p className="text-[11px] text-[#94A3B8]">
+                  At 142 GHz, electromagnetic propagation experiences extreme free-space path loss and severe atmospheric attenuation. Most non-line-of-sight (NLOS) diffuse reflections fall below the noise floor, leaving only <strong className="text-[#D4FF00]">1 to 3 dominant spatial clusters</strong>.
                 </p>
-                <p className="text-[10px] text-[#647B62]">
+                <p className="text-[10px] text-[#64748B]">
                   When transformed into the virtual angular domain via 2D-FFT (Panel 1), energy concentrates into isolated peaks, making attention-based transformers exceptionally efficient at isolating the true channel from isotropic AWGN.
                 </p>
               </div>
 
-              <div className="bg-[#EEF0DC] p-3.5 rounded-lg border border-[#CCD3B5] space-y-1.5">
-                <h5 className="font-semibold text-[#263629] text-xs flex items-center gap-1.5">
-                  <Cpu size={14} className="text-[#789575]" />
+              <div className="bg-[#0B1120] p-3.5 rounded-lg border border-[#1E293B] space-y-1.5">
+                <h5 className="font-semibold text-[#F8FAFC] text-xs flex items-center gap-1.5">
+                  <Cpu size={14} className="text-[#2563EB]" />
                   Attention transformers vs. recurrent ConvLSTM
                 </h5>
-                <p className="text-[11px] text-[#263629]/90">
-                  In our manuscript tests, NCRT operates with <strong>26.3% fewer parameters</strong> (888K vs 1.20M in NCRN) while delivering superior spatial resolution.
+                <p className="text-[11px] text-[#94A3B8]">
+                  In our manuscript tests, NCRT operates with <strong className="text-[#D4FF00]">26.3% fewer parameters</strong> (888K vs 1.20M in NCRN) while delivering superior spatial resolution.
                 </p>
-                <p className="text-[10px] text-[#647B62]">
+                <p className="text-[10px] text-[#64748B]">
                   Unlike recurrent backbones that suffer from gradient dissipation across temporal pilot snapshots, NCRT’s axial self-attention over transmit and receive arrays preserves spatial covariance without being affected by high Doppler shifts (15.8 kHz at 120 km/h).
                 </p>
               </div>
@@ -586,10 +586,10 @@ export default function MatlabStudio({ onMetricsUpdate }) {
         {/* Sub-Tab 3: MATLAB Code Exporter */}
         {activeSubTab === 'code' && (
           <div className="p-4 space-y-2">
-            <p className="text-[11px] text-[#647B62] font-medium">
+            <p className="text-[11px] text-[#94A3B8] font-medium">
               Run this script directly in MATLAB (with 5G Toolbox) to export matching 6G Sub-THz / 5G CDL channel tensors formatted for NCRT:
             </p>
-            <pre className="p-3 bg-[#F5F5E9] rounded-lg border border-[#CCD3B5] font-mono text-[10px] text-[#263629] overflow-x-auto max-h-72 leading-relaxed">
+            <pre className="p-3 bg-[#060911] rounded-lg border border-[#1E293B] font-mono text-[10px] text-[#D4FF00] overflow-x-auto max-h-72 leading-relaxed">
               {matlabScript}
             </pre>
           </div>
