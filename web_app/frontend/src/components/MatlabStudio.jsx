@@ -200,7 +200,7 @@ export default function MatlabStudio({ onMetricsUpdate }) {
   return (
     <div className="space-y-4">
       {/* 1. Header Toolbar with Generator Label */}
-      <div className="bg-[#F2F3E2] border border-[#CCD3B5] rounded-lg p-4 space-y-3">
+      <div className="gw-panel border border-[#CCD3B5]/70 rounded-lg p-4 space-y-3">
         {/* Row 1: Title, Standard Toggle, Generator Origin */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-[#CCD3B5]/70 pb-3">
           <div className="space-y-1">
@@ -415,7 +415,7 @@ export default function MatlabStudio({ onMetricsUpdate }) {
       </div>
 
       {/* 3. Sub-Tabs: Benchmark Curve vs MATLAB Code vs Physical Insights */}
-      <div className="bg-[#F2F3E2] border border-[#CCD3B5] rounded-xl shadow-subtle overflow-hidden">
+      <div className="gw-panel border border-[#CCD3B5]/70 rounded-xl overflow-hidden">
         {/* Navigation Bar for Sub-Tabs */}
         <div className="flex items-center justify-between border-b border-[#CCD3B5] bg-[#EEF0DC] px-3.5 py-2">
           <div className="inline-flex bg-[#E5E8CE] p-0.5 rounded-lg border border-[#CCD3B5] text-xs font-bold">

@@ -102,7 +102,7 @@ export default function PerformanceCurve({ sweepData, is6G = false }) {
   };
 
   return (
-    <div className="bg-[#F2F3E2] border border-[#CCD3B5] rounded-lg p-4 flex flex-col space-y-3">
+    <div className="gw-panel border border-[#CCD3B5]/70 rounded-lg p-4 flex flex-col space-y-3">
       {/* Chart Title and Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#CCD3B5]/70 pb-3">
         <div>

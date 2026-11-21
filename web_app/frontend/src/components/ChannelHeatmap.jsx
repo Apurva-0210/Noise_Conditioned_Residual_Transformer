@@ -86,10 +86,10 @@ export default function ChannelHeatmap({
   };
 
   return (
-    <div className={`bg-[#F2F3E2] rounded-lg p-3.5 flex flex-col justify-between border transition-colors ${
+    <div className={`gw-panel rounded-lg p-3.5 flex flex-col justify-between border transition-all duration-200 ${
       highlight 
-        ? 'border-[#789575]' 
-        : 'border-[#CCD3B5]'
+        ? 'border-[#789575] ring-1 ring-[#789575]/30' 
+        : 'border-[#CCD3B5]/70 hover:border-[#CCD3B5]'
     }`}>
       {/* Header */}
       <div className="flex items-start justify-between gap-1.5 mb-2">

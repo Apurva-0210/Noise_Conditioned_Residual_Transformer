@@ -15,7 +15,8 @@ import {
   Move,
   Scan,
   Download,
-  LayoutDashboard
+  Settings2,
+  X
 } from 'lucide-react';
 
 import { checkHealth, fetchScenarios, runEstimation, runSweep, getApiBase } from './api';
@@ -25,7 +26,6 @@ import ChannelHeatmap from './components/ChannelHeatmap';
 import PerformanceCurve from './components/PerformanceCurve';
 import MatlabStudio from './components/MatlabStudio';
 import RightSidebar from './components/RightSidebar';
-import GlassWorkspaceDemo from './components/ui/demo';
 
 export default function App() {
   const [backendOnline, setBackendOnline] = useState(false);
@@ -51,6 +51,21 @@ export default function App() {
   const [estimateData, setEstimateData] = useState(null);
   const [sweepData, setSweepData] = useState(null);
   const [matlabMetrics, setMatlabMetrics] = useState(null);
+
+  // Live Glass Material Appearance
+  const defaultGlass = {
+    blur: 22,
+    opacity: 0.32,
+    saturation: 1.25,
+    tint: '#eadbc7',
+    edge: 0.65,
+  };
+  const [glass, setGlass] = useState(defaultGlass);
+  const [glassSettingsOpen, setGlassSettingsOpen] = useState(false);
+
+  const updateGlass = (patch) => {
+    setGlass((prev) => ({ ...prev, ...patch }));
+  };
 
   // Initial health check & data loading
   useEffect(() => {
@@ -191,9 +206,26 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#E5E8CE] text-[#263629] flex flex-col antialiased selection:bg-[#789575] selection:text-[#F2F3E2]">
-      {/* Top Header */}
-      <header className="border-b border-[#CCD3B5] bg-[#EEF0DC]/95 backdrop-blur-xl sticky top-0 z-40">
+    <div 
+      className="gw-root min-h-screen text-[#263629] flex flex-col antialiased selection:bg-[#789575] selection:text-[#F2F3E2]"
+      style={{
+        "--gw-blur": `${glass.blur}px`,
+        "--gw-opacity": glass.opacity,
+        "--gw-saturation": glass.saturation,
+        "--gw-tint": glass.tint,
+        "--gw-edge": glass.edge,
+      }}
+    >
+      {/* Ambient Room Image & Gradient Shade for Real Optical Glass Refraction */}
+      <img
+        className="gw-room"
+        src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1920&q=80"
+        alt=""
+      />
+      <div className="gw-room-shade" aria-hidden="true" />
+
+      {/* Top Header with Glass Material */}
+      <header className="border-b border-[#CCD3B5]/60 gw-glass sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           {/* Logo & Paper Title */}
           <div className="flex items-center gap-3">
@@ -205,7 +237,7 @@ export default function App() {
                 <h1 className="text-sm sm:text-base font-semibold text-[#263629] tracking-tight">
                   Massive MIMO Channel Estimation Testbed
                 </h1>
-                <span className="px-1.5 py-0.5 rounded text-[11px] font-mono font-medium bg-[#E5E8CE] text-[#647B62] border border-[#CCD3B5]">
+                <span className="px-1.5 py-0.5 rounded text-[11px] font-mono font-medium bg-[#E5E8CE]/80 text-[#647B62] border border-[#CCD3B5]">
                   VehCom 2026
                 </span>
               </div>
@@ -215,9 +247,9 @@ export default function App() {
             </div>
           </div>
 
-          {/* Quick Status & Chart Tools Button */}
+          {/* Quick Status, Glass Controls & Chart Tools Button */}
           <div className="flex items-center gap-2.5 text-xs">
-            <div className="hidden md:flex items-center gap-2 bg-[#E5E8CE] px-2.5 py-1 rounded-md border border-[#CCD3B5]">
+            <div className="hidden md:flex items-center gap-2 bg-[#E5E8CE]/80 px-2.5 py-1 rounded-md border border-[#CCD3B5]/80">
               <Server size={13} className="text-[#647B62]" />
               <span className="text-[#647B62] text-[11px]">Backend:</span>
               <span className={`font-mono text-[11px] font-medium flex items-center gap-1.5 ${backendOnline ? 'text-[#263629]' : 'text-[#8A4A4A]'}`}>
@@ -226,9 +258,20 @@ export default function App() {
               </span>
             </div>
 
-            <div className="hidden sm:inline-flex items-center gap-1 bg-[#E5E8CE] text-[#263629] px-2.5 py-1 rounded-md border border-[#CCD3B5] font-mono text-xs">
+            <div className="hidden sm:inline-flex items-center gap-1 bg-[#E5E8CE]/80 text-[#263629] px-2.5 py-1 rounded-md border border-[#CCD3B5]/80 font-mono text-xs">
               <span>64×64 UPA</span>
             </div>
+
+            {/* Adjust Glass Material Appearance Button */}
+            <button
+              type="button"
+              onClick={() => setGlassSettingsOpen(!glassSettingsOpen)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition cursor-pointer border bg-[#EEF0DC]/80 hover:bg-[#E5E8CE] text-[#263629] border-[#CCD3B5] shadow-xs"
+              title="Adjust dashboard glass appearance"
+            >
+              <Settings2 size={14} />
+              <span>Adjust glass</span>
+            </button>
 
             {/* Chart Tools & Exports Drawer Toggle */}
             <button
@@ -328,9 +371,9 @@ export default function App() {
           </div>
         )}
 
-        {/* Clean Segmented Navigation Tab Control */}
-        <div className="flex items-center justify-between border-b border-[#CCD3B5] pb-2">
-          <div className="inline-flex bg-[#EEF0DC] p-1 rounded-lg border border-[#CCD3B5] text-xs font-medium gap-1">
+        {/* Clean Segmented Navigation Tab Control with Glass styling */}
+        <div className="flex items-center justify-between border-b border-[#CCD3B5]/50 pb-2">
+          <div className="inline-flex gw-panel p-1 rounded-lg border border-[#CCD3B5]/60 text-xs font-medium gap-1 shadow-xs">
             <button
               onClick={() => setActiveTab('heatmaps')}
               className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition cursor-pointer ${
@@ -366,23 +409,11 @@ export default function App() {
               <Play size={14} />
               <span>6G Sub-THz studio</span>
             </button>
-
-            <button
-              onClick={() => setActiveTab('glass_dashboard')}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition cursor-pointer ${
-                activeTab === 'glass_dashboard'
-                  ? 'bg-[#789575] text-[#F2F3E2] shadow-xs'
-                  : 'text-[#647B62] hover:text-[#263629]'
-              }`}
-            >
-              <LayoutDashboard size={14} />
-              <span>Glass workspace</span>
-            </button>
           </div>
 
           <div className="flex items-center gap-3">
             {/* Quick Chart Tools Mode indicator */}
-            <div className="hidden sm:flex items-center gap-1.5 text-xs font-mono text-[#647B62] bg-[#EEF0DC] border border-[#CCD3B5] px-2.5 py-1 rounded-md">
+            <div className="hidden sm:flex items-center gap-1.5 text-xs font-mono text-[#647B62] bg-[#EEF0DC]/80 backdrop-blur-md border border-[#CCD3B5]/80 px-2.5 py-1 rounded-md">
               <span>Mode:</span>
               <strong className="text-[#263629] capitalize">{chartDragMode}</strong>
               <button
@@ -420,7 +451,7 @@ export default function App() {
             />
 
             {/* 2. Controls bar above heatmaps */}
-            <div className="flex flex-wrap items-center justify-between gap-3 bg-[#F2F3E2] border border-[#CCD3B5] rounded-lg px-4 py-2.5">
+            <div className="gw-panel flex flex-wrap items-center justify-between gap-3 border border-[#CCD3B5]/70 rounded-lg px-4 py-2.5">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-xs font-semibold text-[#263629]">
                   3GPP {selectedScenario} spatial channel grid
@@ -527,7 +558,7 @@ export default function App() {
 
             {/* 4. Performance Summary Table */}
             {estimateData?.results && (
-              <div className="bg-[#F2F3E2] border border-[#CCD3B5] rounded-lg p-4 overflow-x-auto">
+              <div className="gw-panel border border-[#CCD3B5]/70 rounded-lg p-4 overflow-x-auto">
                 <h4 className="text-xs font-semibold text-[#263629] mb-3">
                   Estimation benchmark summary ({selectedScenario} @ {snr} dB)
                 </h4>
@@ -590,14 +621,158 @@ export default function App() {
         {activeTab === 'matlab_6g' && (
           <MatlabStudio onMetricsUpdate={(m) => setMatlabMetrics(m)} />
         )}
-
-        {/* Tab 4: Adjustable Glass Workspace */}
-        {activeTab === 'glass_dashboard' && (
-          <div className="rounded-xl overflow-hidden border border-[#CCD3B5]">
-            <GlassWorkspaceDemo />
-          </div>
-        )}
       </main>
+
+      {/* Live Glass Material Appearance Drawer */}
+      {glassSettingsOpen && (
+        <aside className="gw-material gw-glass" aria-label="Adjust glass appearance">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <Settings2 size={16} className="text-[#789575]" />
+              <h3 className="text-sm font-semibold text-[#263629]">Glass appearance</h3>
+            </div>
+            <button
+              type="button"
+              onClick={() => setGlassSettingsOpen(false)}
+              className="p-1 rounded-md text-[#647B62] hover:text-[#263629] hover:bg-[#789575]/10 cursor-pointer transition"
+              aria-label="Close glass settings"
+            >
+              <X size={16} />
+            </button>
+          </div>
+
+          <div className="gw-material-sample">
+            <Layers size={18} className="text-[#789575]" />
+            <span>Refraction Preview</span>
+          </div>
+
+          {/* Presets */}
+          <div className="mb-4">
+            <span className="text-[11px] font-medium text-[#647B62] block mb-1.5">Presets</span>
+            <div className="grid grid-cols-3 gap-1.5">
+              {[
+                { name: 'Clear', blur: 14, opacity: 0.18, saturation: 1.15, edge: 0.8 },
+                { name: 'Frosted', blur: 26, opacity: 0.42, saturation: 1.35, edge: 0.55 },
+                { name: 'Solid', blur: 34, opacity: 0.72, saturation: 1.05, edge: 0.35 },
+              ].map((p) => (
+                <button
+                  key={p.name}
+                  type="button"
+                  onClick={() => updateGlass({ blur: p.blur, opacity: p.opacity, saturation: p.saturation, edge: p.edge })}
+                  className="px-2 py-1.5 rounded-md text-xs font-medium border border-[#CCD3B5] bg-[#EEF0DC]/70 hover:bg-[#E5E8CE] text-[#263629] transition cursor-pointer text-center"
+                >
+                  {p.name}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Sliders */}
+          <div className="space-y-3 text-xs">
+            <div>
+              <div className="flex justify-between text-[11px] text-[#647B62] mb-1">
+                <span>Backdrop blur</span>
+                <span className="font-mono text-[#263629]">{glass.blur}px</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="40"
+                step="1"
+                value={glass.blur}
+                onChange={(e) => updateGlass({ blur: Number(e.target.value) })}
+                className="w-full accent-[#789575] cursor-pointer"
+              />
+            </div>
+
+            <div>
+              <div className="flex justify-between text-[11px] text-[#647B62] mb-1">
+                <span>Opacity</span>
+                <span className="font-mono text-[#263629]">{Math.round(glass.opacity * 100)}%</span>
+              </div>
+              <input
+                type="range"
+                min="0.08"
+                max="0.9"
+                step="0.02"
+                value={glass.opacity}
+                onChange={(e) => updateGlass({ opacity: Number(e.target.value) })}
+                className="w-full accent-[#789575] cursor-pointer"
+              />
+            </div>
+
+            <div>
+              <div className="flex justify-between text-[11px] text-[#647B62] mb-1">
+                <span>Saturation</span>
+                <span className="font-mono text-[#263629]">{glass.saturation.toFixed(2)}×</span>
+              </div>
+              <input
+                type="range"
+                min="0.5"
+                max="2.0"
+                step="0.05"
+                value={glass.saturation}
+                onChange={(e) => updateGlass({ saturation: Number(e.target.value) })}
+                className="w-full accent-[#789575] cursor-pointer"
+              />
+            </div>
+
+            <div>
+              <div className="flex justify-between text-[11px] text-[#647B62] mb-1">
+                <span>Edge highlight</span>
+                <span className="font-mono text-[#263629]">{Math.round(glass.edge * 100)}%</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.05"
+                value={glass.edge}
+                onChange={(e) => updateGlass({ edge: Number(e.target.value) })}
+                className="w-full accent-[#789575] cursor-pointer"
+              />
+            </div>
+
+            <div>
+              <div className="flex justify-between text-[11px] text-[#647B62] mb-1.5">
+                <span>Glass tint</span>
+                <span className="font-mono text-[#263629]">{glass.tint}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                {['#ffffff', '#eadbc7', '#e5e8ce', '#789575', '#d4e0d2', '#263629'].map((color) => (
+                  <button
+                    key={color}
+                    type="button"
+                    onClick={() => updateGlass({ tint: color })}
+                    style={{ backgroundColor: color }}
+                    className={`w-6 h-6 rounded-full border transition cursor-pointer ${
+                      glass.tint.toLowerCase() === color.toLowerCase()
+                        ? 'ring-2 ring-[#789575] scale-110 border-white'
+                        : 'border-[#CCD3B5]'
+                    }`}
+                    title={color}
+                  />
+                ))}
+                <input
+                  type="color"
+                  value={glass.tint}
+                  onChange={(e) => updateGlass({ tint: e.target.value })}
+                  className="w-6 h-6 p-0 border border-[#CCD3B5] rounded cursor-pointer bg-transparent"
+                  title="Custom color"
+                />
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => updateGlass(defaultGlass)}
+            className="mt-4 w-full py-1.5 rounded-md text-xs font-medium border border-[#CCD3B5] bg-[#EEF0DC]/80 hover:bg-[#E5E8CE] text-[#647B62] hover:text-[#263629] transition cursor-pointer text-center"
+          >
+            Reset to defaults
+          </button>
+        </aside>
+      )}
 
       {/* Slide-over Right Drawer for Chart Tools & Exports (Non-destructive overlay) */}
       <RightSidebar
@@ -616,7 +791,7 @@ export default function App() {
       />
 
       {/* Modern Scientific Footer */}
-      <footer className="border-t border-[#CCD3B5] bg-[#EEF0DC] mt-auto text-xs text-[#647B62]">
+      <footer className="border-t border-[#CCD3B5]/60 gw-glass mt-auto text-xs text-[#647B62]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
             {/* Col 1: Brand & Abstract */}

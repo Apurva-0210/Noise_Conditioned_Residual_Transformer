@@ -278,8 +278,6 @@ def run_estimation(req: EstimationRequest):
                 "latency_ms": round(ncrn_time, 2),
                 "param_count": 1204610,
             }
-            "param_count": 1204610,
-        }
 
     active_est = h_ncrt_est if h_ncrt_est is not None else (h_ncrn_est if h_ncrn_est is not None else h_ls)
 

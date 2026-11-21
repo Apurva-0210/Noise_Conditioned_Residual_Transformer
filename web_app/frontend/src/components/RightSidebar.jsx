@@ -148,8 +148,8 @@ Platform URL: ${window.location.href}`;
         onClick={() => setIsOpen(false)}
       />
 
-      {/* Slide-over Right Drawer */}
-      <aside className="fixed top-0 right-0 h-full w-88 sm:w-96 bg-[#F2F3E2] border-l border-[#CCD3B5] shadow-xl z-50 p-5 flex flex-col justify-between overflow-y-auto transform transition-transform duration-200 ease-in-out">
+      {/* Slide-over Right Drawer with Glass Material */}
+      <aside className="fixed top-0 right-0 h-full w-88 sm:w-96 gw-glass border-l border-[#CCD3B5]/60 shadow-2xl z-50 p-5 flex flex-col justify-between overflow-y-auto transform transition-transform duration-200 ease-in-out">
         <div className="space-y-4">
           {/* Header */}
           <div className="flex items-center justify-between border-b border-[#CCD3B5] pb-3">

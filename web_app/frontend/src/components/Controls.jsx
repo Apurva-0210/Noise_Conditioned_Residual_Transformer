@@ -21,7 +21,7 @@ export default function Controls({
   const dopplerHz = (v_ms * fc / 3.0e8).toFixed(1);
 
   return (
-    <div className="bg-[#F2F3E2] border border-[#CCD3B5] rounded-xl p-5 shadow-subtle space-y-4">
+    <div className="gw-panel border border-[#CCD3B5]/70 rounded-xl p-5 space-y-4">
       {/* Header Row */}
       <div className="flex items-center justify-between border-b border-[#CCD3B5]/60 pb-3">
         <div className="flex items-center gap-2.5">

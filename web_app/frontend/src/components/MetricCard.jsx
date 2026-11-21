@@ -12,10 +12,10 @@ export default function MetricCard({
   icon: Icon 
 }) {
   return (
-    <div className={`bg-[#F2F3E2] rounded-xl p-4 border flex flex-col justify-between transition-colors duration-150 ${
+    <div className={`gw-panel rounded-xl p-4 border flex flex-col justify-between transition-all duration-200 ${
       isHighlighted 
-        ? 'border-[#789575]' 
-        : 'border-[#CCD3B5]'
+        ? 'border-[#789575] ring-1 ring-[#789575]/30' 
+        : 'border-[#CCD3B5]/70 hover:border-[#CCD3B5]'
     }`}>
       {/* Header Row */}
       <div className="flex items-start justify-between gap-2">
@@ -34,7 +34,7 @@ export default function MetricCard({
         </div>
 
         {Icon && (
-          <div className="w-7 h-7 rounded-lg shrink-0 flex items-center justify-center bg-[#EEF0DC] border border-[#CCD3B5] text-[#556B52]">
+          <div className="w-7 h-7 rounded-lg shrink-0 flex items-center justify-center bg-[#EEF0DC]/70 backdrop-blur-md border border-[#CCD3B5]/70 text-[#556B52]">
             <Icon size={14} strokeWidth={1.5} />
           </div>
         )}
@@ -54,14 +54,14 @@ export default function MetricCard({
 
       {/* Footer Details */}
       {(subtitle || badge) && (
-        <div className="mt-3 pt-2.5 border-t border-[#CCD3B5]/60 flex items-center justify-between gap-1.5 text-xs">
+        <div className="mt-3 pt-2.5 border-t border-[#CCD3B5]/50 flex items-center justify-between gap-1.5 text-xs">
           {subtitle && (
             <span className="text-[11px] text-[#7A8C78] leading-tight truncate">
               {subtitle}
             </span>
           )}
           {badge && (
-            <span className="px-1.5 py-0.5 rounded text-[10px] font-mono text-[#556B52] bg-[#EEF0DC] border border-[#CCD3B5] shrink-0">
+            <span className="px-1.5 py-0.5 rounded text-[10px] font-mono text-[#556B52] bg-[#EEF0DC]/70 backdrop-blur-md border border-[#CCD3B5]/70 shrink-0">
               {badge}
             </span>
           )}
