@@ -23,7 +23,8 @@ import {
   fetchMatlabDatasets, 
   runMatlabEstimate, 
   fetchMatlabBenchmarks, 
-  fetchMatlabScript 
+  fetchMatlabScript,
+  getApiBase
 } from '../api';
 import ChannelHeatmap from './ChannelHeatmap';
 
@@ -459,7 +460,7 @@ export default function MatlabStudio({ onMetricsUpdate }) {
           {activeSubTab === 'code' && (
             <div className="flex items-center gap-1.5">
               <a
-                href="http://localhost:8000/api/download/script"
+                href={`${getApiBase()}/download/script`}
                 download="export_6g_channels.m"
                 className="flex items-center gap-1 px-2.5 py-1 rounded bg-[#789575] hover:bg-[#668263] text-[#F2F3E2] text-xs font-bold transition shadow-sm"
               >

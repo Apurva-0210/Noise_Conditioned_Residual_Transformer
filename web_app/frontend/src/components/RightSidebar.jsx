@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getApiBase } from '../api';
 import { 
   Download, 
   FileCode, 
@@ -355,7 +356,7 @@ Platform URL: ${window.location.href}`;
 
                 {/* Benchmark CSV (MATLAB 6G / 5G) */}
                 <a
-                  href={`http://localhost:8000/api/download/csv/${activeStandard === '5g_nr' ? '5g' : '6g'}`}
+                  href={`${getApiBase()}/download/csv/${activeStandard === '5g_nr' ? '5g' : '6g'}`}
                   target="_blank"
                   rel="noreferrer"
                   className="w-full flex items-center justify-between py-2 px-3 rounded-lg bg-[#F2F3E2] hover:bg-[#E5E8CE] border border-[#CCD3B5] text-xs font-bold text-[#263629] transition cursor-pointer shadow-sm group"
@@ -371,7 +372,7 @@ Platform URL: ${window.location.href}`;
 
                 {/* Trained Model .keras */}
                 <a
-                  href="http://localhost:8000/api/download/model"
+                  href={`${getApiBase()}/download/model`}
                   target="_blank"
                   rel="noreferrer"
                   className="w-full flex items-center justify-between py-2 px-3 rounded-lg bg-[#F2F3E2] hover:bg-[#E5E8CE] border border-[#CCD3B5] text-xs font-bold text-[#263629] transition cursor-pointer shadow-sm group"
@@ -387,7 +388,7 @@ Platform URL: ${window.location.href}`;
 
                 {/* Full Release ZIP */}
                 <a
-                  href="http://localhost:8000/api/download/release-zip"
+                  href={`${getApiBase()}/download/release-zip`}
                   target="_blank"
                   rel="noreferrer"
                   className="w-full flex items-center justify-between py-2 px-3 rounded-lg bg-[#789575] hover:bg-[#668263] border border-[#789575] text-xs font-bold text-[#F2F3E2] transition cursor-pointer shadow-sm group"

@@ -18,16 +18,18 @@ import {
   Download
 } from 'lucide-react';
 
-import { checkHealth, fetchScenarios, runEstimation, runSweep } from './api';
+import { checkHealth, fetchScenarios, runEstimation, runSweep, getApiBase, getBackendUrl } from './api';
 import MetricCard from './components/MetricCard';
 import Controls from './components/Controls';
 import ChannelHeatmap from './components/ChannelHeatmap';
 import PerformanceCurve from './components/PerformanceCurve';
 import MatlabStudio from './components/MatlabStudio';
 import RightSidebar from './components/RightSidebar';
+import BackendSettingsModal from './components/BackendSettingsModal';
 
 export default function App() {
   const [backendOnline, setBackendOnline] = useState(false);
+  const [settingsModalOpen, setSettingsModalOpen] = useState(false);
   const [scenarios, setScenarios] = useState([
     { id: 'TDL-A', name: '3GPP TDL-A', type: 'NLOS', delay_spread: 'High (300 ns)' },
     { id: 'TDL-B', name: '3GPP TDL-B', type: 'NLOS', delay_spread: 'Medium (100 ns)' },
@@ -216,13 +218,19 @@ export default function App() {
 
           {/* Quick Status & Chart Tools Button */}
           <div className="flex items-center gap-3 text-xs">
-            <div className="hidden md:flex items-center gap-2 bg-[#E5E8CE] px-3 py-1.5 rounded-lg border border-[#CCD3B5] shadow-inner">
-              <Server size={14} className="text-[#647B62]" />
-              <span className="text-[#647B62] font-medium">FastAPI:</span>
-              <span className={`font-mono font-bold ${backendOnline ? 'text-[#263629]' : 'text-rose-600'}`}>
-                {backendOnline ? 'Active (Port 8000)' : 'Offline'}
+            <button
+              type="button"
+              onClick={() => setSettingsModalOpen(true)}
+              className="flex items-center gap-2 bg-[#E5E8CE] hover:bg-[#DDE1C1] px-3 py-1.5 rounded-lg border border-[#CCD3B5] shadow-inner transition cursor-pointer group"
+              title="Click to view or change backend connection URL"
+            >
+              <Server size={14} className="text-[#647B62] group-hover:text-[#263629]" />
+              <span className="text-[#647B62] font-medium hidden sm:inline">FastAPI:</span>
+              <span className={`font-mono font-bold flex items-center gap-1.5 ${backendOnline ? 'text-[#263629]' : 'text-rose-600'}`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${backendOnline ? 'bg-emerald-600' : 'bg-rose-500 animate-pulse'}`} />
+                {backendOnline ? 'Online' : 'Offline (Click to Connect)'}
               </span>
-            </div>
+            </button>
 
             <div className="hidden sm:flex items-center gap-1.5 bg-[#789575]/15 text-[#263629] px-3 py-1.5 rounded-lg border border-[#789575]/40 font-bold font-mono">
               <Sparkles size={14} className="text-[#789575]" />
@@ -404,6 +412,7 @@ export default function App() {
               loadingEstimate={loadingEstimate}
               loadingSweep={loadingSweep}
               backendOnline={backendOnline}
+              onOpenBackendSettings={() => setSettingsModalOpen(true)}
             />
 
             {/* 2. Controls bar above heatmaps */}
@@ -693,21 +702,21 @@ export default function App() {
               </h4>
               <div className="flex flex-col gap-1.5">
                 <a
-                  href="http://localhost:8000/api/download/model"
+                  href={`${getApiBase()}/download/model`}
                   className="inline-flex items-center justify-between px-2.5 py-1.5 rounded bg-[#E5E8CE] hover:bg-[#F2F3E2] border border-[#CCD3B5] text-[11px] font-semibold text-[#263629] transition shadow-xs"
                 >
                   <span>Trained Model Weights</span>
                   <span className="font-mono text-[10px] text-[#789575]">.keras</span>
                 </a>
                 <a
-                  href="http://localhost:8000/api/download/csv/6g"
+                  href={`${getApiBase()}/download/csv/6g`}
                   className="inline-flex items-center justify-between px-2.5 py-1.5 rounded bg-[#E5E8CE] hover:bg-[#F2F3E2] border border-[#CCD3B5] text-[11px] font-semibold text-[#263629] transition shadow-xs"
                 >
                   <span>500-Sample Benchmark</span>
                   <span className="font-mono text-[10px] text-[#789575]">.csv</span>
                 </a>
                 <a
-                  href="http://localhost:8000/api/download/release-zip"
+                  href={`${getApiBase()}/download/release-zip`}
                   className="inline-flex items-center justify-between px-2.5 py-1.5 rounded bg-[#789575] hover:bg-[#668263] text-[#F2F3E2] text-[11px] font-bold transition shadow-xs"
                 >
                   <span>Full Research Archive</span>
@@ -723,16 +732,39 @@ export default function App() {
               © 2026 Massive MIMO AI Channel Studio • Published in <em>Vehicular Communications</em> (Elsevier).
             </p>
             <div className="flex items-center gap-3 font-mono text-[10px]">
-              <span className="flex items-center gap-1.5 text-[#36663E] font-bold">
-                <span className="w-2 h-2 rounded-full bg-[#36663E] animate-pulse" />
-                Backend Port 8000 Active
-              </span>
+              <button
+                type="button"
+                onClick={() => setSettingsModalOpen(true)}
+                className="flex items-center gap-1.5 font-bold hover:underline cursor-pointer"
+              >
+                <span className={`w-2 h-2 rounded-full ${backendOnline ? 'bg-emerald-600 animate-pulse' : 'bg-rose-500'}`} />
+                <span className={backendOnline ? 'text-emerald-800' : 'text-rose-600'}>
+                  {backendOnline ? 'FastAPI Cloud Online' : 'FastAPI Offline (Click to configure)'}
+                </span>
+              </button>
               <span>•</span>
-              <span className="text-[#263629] font-bold">64×64 Array Active</span>
+              <span className="text-[#263629] font-bold">64×64 Massive Array</span>
             </div>
           </div>
         </div>
       </footer>
+
+      {/* Backend Connection Modal */}
+      <BackendSettingsModal
+        isOpen={settingsModalOpen}
+        onClose={() => setSettingsModalOpen(false)}
+        onConnected={async () => {
+          try {
+            const h = await checkHealth();
+            setBackendOnline(h.status === 'online');
+            const sc = await fetchScenarios();
+            setScenarios(sc);
+            handleRunEstimate();
+          } catch (e) {
+            console.error(e);
+          }
+        }}
+      />
     </div>
   );
 }
