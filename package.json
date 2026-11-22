@@ -1,0 +1,20 @@
+{
+  "name": "noise-conditioned-residual-transformer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Attention-Based Residual Learning Channel Estimation for Massive MIMO",
+  "scripts": {
+    "dev": "npm --prefix web_app/frontend run dev",
+    "start": "npm --prefix web_app/frontend run dev",
+    "build": "npm --prefix web_app/frontend run build",
+    "preview": "npm --prefix web_app/frontend run preview",
+    "backend": "cd web_app/backend && python3 -m uvicorn main:app --reload --port 8000"
+  },
+  "keywords": [
+    "massive-mimo",
+    "channel-estimation",
+    "deep-learning",
+    "transformer",
+    "6g-subthz"
+  ]
+}
